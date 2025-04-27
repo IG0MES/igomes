@@ -1,0 +1,3495 @@
+ 1/1: from pyspark.sql import SparkSession
+ 1/2: from pyspark.sql import SparkSession
+ 1/3: from pyspark.sql import SparkSession
+ 1/4: from pyspark.sql import SparkSession
+ 1/5:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0") \
+    .getOrCreate()
+ 1/6:
+jdbc_url = "jdbc:postgresql://localhost:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+ 1/7: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+ 2/1: from pyspark.sql import SparkSession
+ 2/2:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0") \
+    .getOrCreate()
+ 2/3:
+jdbc_url = "jdbc:postgresql://localhost:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+ 2/4: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+ 2/5: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+ 3/1: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+ 3/2:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0") \
+    .getOrCreate()
+ 3/3: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+ 3/4:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+ 3/5: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+ 3/6: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+ 3/7: df_matriculas = spark.read.jdbc(url=jdbc_url, table="matriculas", properties=connection_properties)
+ 3/8:
+minio_endpoint = "http://localhost:9000"
+minio_access_key = "minioaccesskey"
+minio_secret_key = "miniosecretkey"
+bucket_bronze = "bronze"
+
+spark.conf.set("spark.hadoop.fs.s3a.endpoint", minio_endpoint)
+spark.conf.set("spark.hadoop.fs.s3a.access.key", minio_access_key)
+spark.conf.set("spark.hadoop.fs.s3a.secret.key", minio_secret_key)
+spark.conf.set("spark.hadoop.fs.s3a.path.style.access", "true")
+spark.conf.set("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+
+path_alunos_bronze = f"s3a://{bucket_bronze}/alunos"
+df_alunos.write.mode("overwrite").parquet(path_alunos_bronze)
+
+path_matriculas_bronze = f"s3a://{bucket_bronze}/matriculas"
+df_matriculas.write.mode("overwrite").parquet(path_matriculas_bronze)
+ 3/9:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+ 4/1: from pyspark.sql import SparkSession
+ 4/2:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+ 4/3:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+ 4/4: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+ 4/5: df_matriculas = spark.read.jdbc(url=jdbc_url, table="matriculas", properties=connection_properties)
+ 4/6: bucket_bronze = "bronze"
+ 4/7:
+path_alunos_bronze = f"s3a://{bucket_bronze}/alunos"
+df_alunos.write.mode("overwrite").parquet(path_alunos_bronze)
+ 5/1: from pyspark.sql import SparkSession
+ 5/2:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+ 6/1:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+ 6/2: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+ 6/3: df_matriculas = spark.read.jdbc(url=jdbc_url, table="matriculas", properties=connection_properties)
+ 6/4: bucket_bronze = "bronze"
+ 6/5:
+path_alunos_bronze = f"s3a://{bucket_bronze}/alunos"
+df_alunos.write.mode("overwrite").parquet(path_alunos_bronze)
+ 6/6:
+path_matriculas_bronze = f"s3a://{bucket_bronze}/matriculas"
+df_matriculas.write.mode("overwrite").parquet(path_matriculas_bronze)
+ 7/1: from pyspark.sql import SparkSession
+ 7/2:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+ 8/1: from pyspark.sql import SparkSession
+ 8/2:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+ 9/1:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+ 9/2: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+ 9/3: from pyspark.sql import SparkSession
+ 9/4: from pyspark.sql import SparkSession
+10/1: from pyspark.sql import SparkSession
+10/2:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+11/1:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+11/2: from pyspark.sql import SparkSession
+11/3:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+12/1:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+12/2: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+13/1: from pyspark.sql import SparkSession
+13/2:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+14/1:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+14/2: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+14/3: from pyspark.sql import SparkSession
+14/4:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+14/5:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+14/6: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+14/7: df_matriculas = spark.read.jdbc(url=jdbc_url, table="matriculas", properties=connection_properties)
+14/8: bucket_bronze = "bronze"
+14/9:
+path_alunos_bronze = f"s3a://{bucket_bronze}/alunos"
+df_alunos.write.mode("overwrite").parquet(path_alunos_bronze)
+16/1: from pyspark.sql import SparkSession
+16/2:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+16/3:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+16/4: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+16/5: df_matriculas = spark.read.jdbc(url=jdbc_url, table="matriculas", properties=connection_properties)
+16/6: bucket_bronze = "bronze"
+16/7:
+path_alunos_bronze = f"s3a://{bucket_bronze}/alunos"
+df_alunos.write.mode("overwrite").parquet(path_alunos_bronze)
+16/8:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    ...
+    .getOrCreate()
+16/9: from pyspark.sql import SparkSession
+16/10:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://minio:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+16/11:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+16/12: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+16/13: df_matriculas = spark.read.jdbc(url=jdbc_url, table="matriculas", properties=connection_properties)
+16/14: bucket_bronze = "bronze"
+16/15:
+path_alunos_bronze = f"s3a://{bucket_bronze}/alunos"
+df_alunos.write.mode("overwrite").parquet(path_alunos_bronze)
+16/16:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://minio:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .getOrCreate()
+16/17:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+16/18: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+16/19: df_matriculas = spark.read.jdbc(url=jdbc_url, table="matriculas", properties=connection_properties)
+16/20: bucket_bronze = "bronze"
+16/21:
+path_alunos_bronze = f"s3a://{bucket_bronze}/alunos"
+df_alunos.write.mode("overwrite").parquet(path_alunos_bronze)
+16/22:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://minio:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.region", "us-east-1") \
+    .getOrCreate()
+16/23:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+16/24: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+16/25: df_matriculas = spark.read.jdbc(url=jdbc_url, table="matriculas", properties=connection_properties)
+16/26: bucket_bronze = "bronze"
+16/27:
+path_alunos_bronze = f"s3a://{bucket_bronze}/alunos"
+df_alunos.write.mode("overwrite").parquet(path_alunos_bronze)
+17/1: from pyspark.sql import SparkSession
+17/2:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://minio:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.region", "us-east-1") \
+    .getOrCreate()
+17/3:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+17/4: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+17/5: df_matriculas = spark.read.jdbc(url=jdbc_url, table="matriculas", properties=connection_properties)
+17/6: bucket_bronze = "bronze"
+17/7:
+path_alunos_bronze = f"s3a://{bucket_bronze}/alunos"
+df_alunos.write.mode("overwrite").parquet(path_alunos_bronze)
+17/8:
+path_matriculas_bronze = f"s3a://{bucket_bronze}/matriculas"
+df_matriculas.write.mode("overwrite").parquet(path_matriculas_bronze)
+17/9:
+import subprocess
+
+def executar_notebook(notebook_path):
+    try:
+        subprocess.run(["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{notebook_path}"], check=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        return False
+
+if __name__ == "__main__":
+    extracao_status = executar_notebook("notebooks/extracao_postgres.ipynb") # Adapte o nome do seu notebook de extração
+    if extracao_status:
+        transformacao_status = executar_notebook("notebooks/transformacao.ipynb") # Adapte o nome do seu notebook de transformação
+        if transformacao_status:
+            refinamento_status = executar_notebook("notebooks/refinamento.ipynb") # Adapte o nome do seu notebook de refinamento
+            if refinamento_status:
+                carga_status = executar_notebook("notebooks/carga_dw.ipynb") # Adapte o nome do seu notebook de carga
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+18/1: import subprocess
+18/2:
+def executar_notebook(notebook_path):
+    try:
+        subprocess.run(["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{notebook_path}"], check=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        return False
+18/3:
+if __name__ == "__main__":
+    extracao_status = executar_notebook("notebooks/extracao_postgres.ipynb")  # Substitua pelo nome do seu notebook de extração
+    if extracao_status:
+        transformacao_status = executar_notebook("notebooks/transformacao_alunos.ipynb")  # Substitua pelo nome do seu notebook de transformação
+        if transformacao_status:
+            refinamento_status = executar_notebook("notebooks/refinamento.ipynb")  # Substitua pelo nome do seu notebook de refinamento
+            if refinamento_status:
+                carga_status = executar_notebook("notebooks/carga_dw.ipynb")  # Substitua pelo nome do seu notebook de carga
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+19/1: from pyspark.sql import SparkSession
+19/2:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://minio:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.region", "us-east-1") \
+    .getOrCreate()
+19/3:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+19/4: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+19/5: df_matriculas = spark.read.jdbc(url=jdbc_url, table="matriculas", properties=connection_properties)
+19/6: bucket_bronze = "bronze"
+19/7:
+path_alunos_bronze = f"s3a://{bucket_bronze}/alunos"
+df_alunos.write.mode("overwrite").parquet(path_alunos_bronze)
+19/8:
+path_matriculas_bronze = f"s3a://{bucket_bronze}/matriculas"
+df_matriculas.write.mode("overwrite").parquet(path_matriculas_bronze)
+18/4: import subprocess
+18/5:
+def executar_notebook(notebook_path):
+    try:
+        subprocess.run(["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{notebook_path}"], check=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        return False
+18/6:
+if __name__ == "__main__":
+    extracao_status = executar_notebook("notebooks/extracao_postgres.ipynb")  # Substitua pelo nome do seu notebook de extração
+    if extracao_status:
+        transformacao_status = executar_notebook("notebooks/transformacao_alunos.ipynb")  # Substitua pelo nome do seu notebook de transformação
+        if transformacao_status:
+            refinamento_status = executar_notebook("notebooks/refinamento.ipynb")  # Substitua pelo nome do seu notebook de refinamento
+            if refinamento_status:
+                carga_status = executar_notebook("notebooks/carga_dw.ipynb")  # Substitua pelo nome do seu notebook de carga
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+20/1: from pyspark.sql import SparkSession
+20/2:
+spark = SparkSession.builder \
+    .appName("ExtracaoPostgreSQL") \
+    .config("spark.jars.packages", "org.postgresql:postgresql:42.6.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.endpoint", "http://minio:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.region", "us-east-1") \
+    .getOrCreate()
+20/3:
+jdbc_url = "jdbc:postgresql://postgres:5432/prova"
+connection_properties = {
+    "user": "postgres",
+    "password": "password",
+    "driver": "org.postgresql.Driver"
+}
+20/4: df_alunos = spark.read.jdbc(url=jdbc_url, table="alunos", properties=connection_properties)
+20/5: df_matriculas = spark.read.jdbc(url=jdbc_url, table="matriculas", properties=connection_properties)
+20/6: bucket_bronze = "bronze"
+20/7:
+path_alunos_bronze = f"s3a://{bucket_bronze}/alunos"
+df_alunos.write.mode("overwrite").parquet(path_alunos_bronze)
+20/8:
+path_matriculas_bronze = f"s3a://{bucket_bronze}/matriculas"
+df_matriculas.write.mode("overwrite").parquet(path_matriculas_bronze)
+18/7:
+import subprocess
+
+try:
+    result = subprocess.run(["ls", "notebooks"], capture_output=True, text=True, check=True)
+    print("Listagem da pasta 'notebooks':")
+    print(result.stdout)
+except subprocess.CalledProcessError as e:
+    print(f"Erro ao listar a pasta 'notebooks': {e}")
+    print(f"Stderr:\n{e.stderr}")
+18/8: import subprocess
+21/1: import subprocess
+21/2:
+def executar_notebook(notebook_path):
+    try:
+        subprocess.run(["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{notebook_path}"], check=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        return False
+21/3:
+import subprocess
+
+try:
+    result = subprocess.run(["ls", "notebooks"], capture_output=True, text=True, check=True)
+    print("Listagem da pasta 'notebooks':")
+    print(result.stdout)
+except subprocess.CalledProcessError as e:
+    print(f"Erro ao listar a pasta 'notebooks': {e}")
+    print(f"Stderr:\n{e.stderr}")
+21/4:
+if __name__ == "__main__":
+    extracao_status = executar_notebook("notebooks/extracao_postgres.ipynb")  # Substitua pelo nome do seu notebook de extração
+    if extracao_status:
+        transformacao_status = executar_notebook("notebooks/transformacao_alunos.ipynb")  # Substitua pelo nome do seu notebook de transformação
+        if transformacao_status:
+            refinamento_status = executar_notebook("notebooks/refinamento.ipynb")  # Substitua pelo nome do seu notebook de refinamento
+            if refinamento_status:
+                carga_status = executar_notebook("notebooks/carga_dw.ipynb")  # Substitua pelo nome do seu notebook de carga
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+21/5: extracao_status = executar_notebook("extracao_postgres.ipynb")
+21/6:
+import os
+print(f"Diretório de trabalho atual: {os.getcwd()}")
+21/7:
+if __name__ == "__main__":
+    extracao_status = executar_notebook("extracao_postgres.ipynb")
+    if extracao_status:
+        transformacao_status = executar_notebook("transformacao_alunos.ipynb")
+        if transformacao_status:
+            refinamento_status = executar_notebook("refinamento.ipynb")
+            if refinamento_status:
+                carga_status = executar_notebook("carga_dw.ipynb")
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+21/8: import subprocess
+23/1: import subprocess
+23/2:
+def executar_notebook(notebook_path):
+    try:
+        subprocess.run(["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{notebook_path}"], check=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        return False
+23/3:
+if __name__ == "__main__":
+    extracao_status = executar_notebook("notebooks/extracao_postgres.ipynb")  # Substitua pelo nome do seu notebook de extração
+    if extracao_status:
+        transformacao_status = executar_notebook("notebooks/transformacao_alunos.ipynb")  # Substitua pelo nome do seu notebook de transformação
+        if transformacao_status:
+            refinamento_status = executar_notebook("notebooks/refinamento.ipynb")  # Substitua pelo nome do seu notebook de refinamento
+            if refinamento_status:
+                carga_status = executar_notebook("notebooks/carga_dw.ipynb")  # Substitua pelo nome do seu notebook de carga
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+23/4:
+import subprocess
+
+try:
+    result = subprocess.run(["ls", "notebooks"], capture_output=True, text=True, check=True)
+    print("Listagem da pasta 'notebooks':")
+    print(result.stdout)
+except subprocess.CalledProcessError as e:
+    print(f"Erro ao listar a pasta 'notebooks': {e}")
+    print(f"Stderr:\n{e.stderr}")
+23/5: extracao_status = executar_notebook("extracao_postgres.ipynb")
+23/6:
+import os
+print(f"Diretório de trabalho atual: {os.getcwd()}")
+23/7:
+if __name__ == "__main__":
+    extracao_status = executar_notebook("extracao_postgres.ipynb")
+    if extracao_status:
+        transformacao_status = executar_notebook("transformacao_alunos.ipynb")
+        if transformacao_status:
+            refinamento_status = executar_notebook("refinamento.ipynb")
+            if refinamento_status:
+                carga_status = executar_notebook("carga_dw.ipynb")
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+24/1: import subprocess
+24/2:
+def executar_notebook(notebook_path):
+    try:
+        subprocess.run(["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{notebook_path}"], check=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        return False
+24/3:
+if __name__ == "__main__":
+    extracao_status = executar_notebook("notebooks/extracao_postgres.ipynb")
+    if extracao_status:
+        transformacao_status = executar_notebook("notebooks/transformacao_alunos.ipynb")
+        if transformacao_status:
+            refinamento_status = executar_notebook("notebooks/refinamento.ipynb")
+            if refinamento_status:
+                carga_status = executar_notebook("notebooks/carga_dw.ipynb")
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+25/1:
+def executar_notebook(notebook_path):
+    try:
+        subprocess.run(["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{notebook_path}"], check=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        return False
+25/2:
+if __name__ == "__main__":
+    extracao_status = executar_notebook("notebooks/extracao_postgres.ipynb")
+    if extracao_status:
+        transformacao_status = executar_notebook("notebooks/transformacao_alunos.ipynb")
+        if transformacao_status:
+            refinamento_status = executar_notebook("notebooks/refinamento.ipynb")
+            if refinamento_status:
+                carga_status = executar_notebook("notebooks/carga_dw.ipynb")
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+26/1: import subprocess
+26/2:
+def executar_notebook(notebook_path):
+    try:
+        result = subprocess.run(["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{notebook_path}"], check=True, capture_output=True, text=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        print(f"Saída:\n{result.stdout}")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        print(f"Stderr:\n{e.stderr}")
+        return False
+26/3:
+if __name__ == "__main__":
+    extracao_status = executar_notebook("notebooks/extracao_postgres.ipynb")
+    if extracao_status:
+        transformacao_status = executar_notebook("notebooks/transformacao_alunos.ipynb")
+        if transformacao_status:
+            refinamento_status = executar_notebook("notebooks/refinamento.ipynb")
+            if refinamento_status:
+                carga_status = executar_notebook("notebooks/carga_dw.ipynb")
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+26/4:
+import os
+extracao_path_abs = os.path.abspath("notebooks/extracao_postgres.ipynb")
+print(f"Caminho absoluto para extracao: {extracao_path_abs}")
+26/5:
+import subprocess
+import os
+
+def executar_notebook(notebook_path):
+    try:
+        result = subprocess.run(["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{os.path.basename(notebook_path)}"], check=True, capture_output=True, text=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        print(f"Saída:\n{result.stdout}")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        print(f"Stderr:\n{e.stderr}")
+        return False
+
+if __name__ == "__main__":
+    base_path = "/home/jovyan/notebooks/notebooks"  # Caminho base para os notebooks
+
+    extracao_path = os.path.join(base_path, "extracao_postgres.ipynb")
+    transformacao_path = os.path.join(base_path, "transformacao_alunos.ipynb")
+    refinamento_path = os.path.join(base_path, "refinamento.ipynb")
+    carga_path = os.path.join(base_path, "carga_dw.ipynb")
+
+    extracao_status = executar_notebook(extracao_path)
+    if extracao_status:
+        transformacao_status = executar_notebook(transformacao_path)
+        if transformacao_status:
+            refinamento_status = executar_notebook(refinamento_path)
+            if refinamento_status:
+                carga_status = executar_notebook(carga_path)
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+26/6:
+def executar_notebook(notebook_path):
+    comando = ["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{os.path.basename(notebook_path)}"]
+    print(f"Executando comando: {' '.join(comando)}")
+    try:
+        result = subprocess.run(comando, check=True, capture_output=True, text=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        print(f"Saída:\n{result.stdout}")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        print(f"Stderr:\n{e.stderr}")
+        return False
+26/7:
+if __name__ == "__main__":
+    base_path = "/home/jovyan/notebooks/notebooks"  # Caminho base para os notebooks
+
+    extracao_path = os.path.join(base_path, "extracao_postgres.ipynb")
+    transformacao_path = os.path.join(base_path, "transformacao_alunos.ipynb")
+    refinamento_path = os.path.join(base_path, "refinamento.ipynb")
+    carga_path = os.path.join(base_path, "carga_dw.ipynb")
+
+    extracao_status = executar_notebook(extracao_path)
+    if extracao_status:
+        transformacao_status = executar_notebook(transformacao_path)
+        if transformacao_status:
+            refinamento_status = executar_notebook(refinamento_path)
+            if refinamento_status:
+                carga_status = executar_notebook(carga_path)
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+26/8:
+def executar_notebook(notebook_path):
+    comando_ls = ["ls", "-l", "/home/jovyan/notebooks/notebooks"]
+    print(f"Testando listagem do diretório: {' '.join(comando_ls)}")
+    try:
+        result_ls = subprocess.run(comando_ls, check=True, capture_output=True, text=True)
+        print(f"Saída da listagem:\n{result_ls.stdout}")
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao listar o diretório: {e}")
+        print(f"Stderr da listagem:\n{e.stderr}")
+        return False  # Se falhar a listagem, provavelmente a execução do notebook também falhará
+
+    comando_nbconvert = ["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{os.path.basename(notebook_path)}"]
+    print(f"Executando comando nbconvert: {' '.join(comando_nbconvert)}")
+    try:
+        result_nbconvert = subprocess.run(comando_nbconvert, check=True, capture_output=True, text=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        print(f"Saída nbconvert:\n{result_nbconvert.stdout}")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        print(f"Stderr nbconvert:\n{e.stderr}")
+        return False
+26/9:
+def executar_notebook(notebook_path):
+    comando_ls = ["ls", "-l", "/home/jovyan/notebooks/notebooks"]
+    print(f"Testando listagem do diretório: {' '.join(comando_ls)}")
+    try:
+        result_ls = subprocess.run(comando_ls, check=True, capture_output=True, text=True)
+        print(f"Saída da listagem:\n{result_ls.stdout}")
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao listar o diretório: {e}")
+        print(f"Stderr da listagem:\n{e.stderr}")
+        return False  # Se falhar a listagem, provavelmente a execução do notebook também falhará
+
+    comando_nbconvert = ["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{os.path.basename(notebook_path)}"]
+    print(f"Executando comando nbconvert: {' '.join(comando_nbconvert)}")
+    try:
+        result_nbconvert = subprocess.run(comando_nbconvert, check=True, capture_output=True, text=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        print(f"Saída nbconvert:\n{result_nbconvert.stdout}")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        print(f"Stderr nbconvert:\n{e.stderr}")
+        return False
+26/10:
+if __name__ == "__main__":
+    base_path = "/home/jovyan/notebooks/notebooks"  # Caminho base para os notebooks
+
+    extracao_path = os.path.join(base_path, "extracao_postgres.ipynb")
+    transformacao_path = os.path.join(base_path, "transformacao_alunos.ipynb")
+    refinamento_path = os.path.join(base_path, "refinamento.ipynb")
+    carga_path = os.path.join(base_path, "carga_dw.ipynb")
+
+    extracao_status = executar_notebook(extracao_path)
+    if extracao_status:
+        transformacao_status = executar_notebook(transformacao_path)
+        if transformacao_status:
+            refinamento_status = executar_notebook(refinamento_path)
+            if refinamento_status:
+                carga_status = executar_notebook(carga_path)
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+26/11:
+import subprocess
+import os
+26/12:
+def executar_notebook(notebook_path):
+    comando_ls = ["ls", "-l", "/home/jovyan/notebooks/notebooks"]
+    print(f"Testando listagem do diretório: {' '.join(comando_ls)}")
+    try:
+        result_ls = subprocess.run(comando_ls, check=True, capture_output=True, text=True)
+        print(f"Saída da listagem:\n{result_ls.stdout}")
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao listar o diretório: {e}")
+        print(f"Stderr da listagem:\n{e.stderr}")
+        return False
+
+    comando_nbconvert = ["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{os.path.basename(notebook_path)}"]
+    print(f"Executando comando nbconvert: {' '.join(comando_nbconvert)}")
+    try:
+        result_nbconvert = subprocess.run(comando_nbconvert, check=True, capture_output=True, text=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        print(f"Saída nbconvert:\n{result_nbconvert.stdout}")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        print(f"Stderr nbconvert:\n{e.stderr}")
+        return False
+26/13: print(f"Diretório de trabalho do script: {os.getcwd()}")
+26/14:
+if __name__ == "__main__":
+    extracao_path = "notebooks/extracao_postgres.ipynb"
+    transformacao_path = "notebooks/transformacao_alunos.ipynb"
+    refinamento_path = "notebooks/refinamento.ipynb"
+    carga_path = "notebooks/carga_dw.ipynb"
+
+    extracao_status = executar_notebook(extracao_path)
+    if extracao_status:
+        transformacao_status = executar_notebook(transformacao_path)
+        if transformacao_status:
+            refinamento_status = executar_notebook(refinamento_path)
+            if refinamento_status:
+                carga_status = executar_notebook(carga_path)
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+27/1:
+import subprocess
+import os
+27/2:
+def executar_notebook(notebook_path):
+    comando_ls = ["ls", "-l", "."]
+    print(f"Testando listagem do diretório: {' '.join(comando_ls)}")
+    try:
+        result_ls = subprocess.run(comando_ls, check=True, capture_output=True, text=True)
+        print(f"Saída da listagem:\n{result_ls.stdout}")
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao listar o diretório: {e}")
+        print(f"Stderr da listagem:\n{e.stderr}")
+        return False
+
+    comando_nbconvert = ["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{os.path.basename(notebook_path)}"]
+    print(f"Executando comando nbconvert: {' '.join(comando_nbconvert)}")
+    try:
+        result_nbconvert = subprocess.run(comando_nbconvert, check=True, capture_output=True, text=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        print(f"Saída nbconvert:\n{result_nbconvert.stdout}")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        print(f"Stderr nbconvert:\n{e.stderr}")
+        return False
+27/3: print(f"Diretório de trabalho do script: {os.getcwd()}")
+27/4:
+if __name__ == "__main__":
+    extracao_path = "extracao_postgres.ipynb"
+    transformacao_path = "transformacao_alunos.ipynb"
+    refinamento_path = "refinamento.ipynb"
+    carga_path = "carga_dw.ipynb"
+
+    extracao_status = executar_notebook(extracao_path)
+    if extracao_status:
+        transformacao_status = executar_notebook(transformacao_path)
+        if transformacao_status:
+            refinamento_status = executar_notebook(refinamento_path)
+            if refinamento_status:
+                carga_status = executar_notebook(carga_path)
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+27/5:
+import subprocess
+import os
+30/1:
+import subprocess
+import os
+30/2:
+def executar_notebook(notebook_path):
+    comando_ls = ["ls", "-l", "."]
+    print(f"Testando listagem do diretório: {' '.join(comando_ls)}")
+    try:
+        result_ls = subprocess.run(comando_ls, check=True, capture_output=True, text=True)
+        print(f"Saída da listagem:\n{result_ls.stdout}")
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao listar o diretório: {e}")
+        print(f"Stderr da listagem:\n{e.stderr}")
+        return False
+
+    comando_nbconvert = ["jupyter", "nbconvert", "--to", "notebook", "--execute", notebook_path, "--output", f"executed_{os.path.basename(notebook_path)}"]
+    print(f"Executando comando nbconvert: {' '.join(comando_nbconvert)}")
+    try:
+        result_nbconvert = subprocess.run(comando_nbconvert, check=True, capture_output=True, text=True)
+        print(f"Notebook {notebook_path} executado com sucesso.")
+        print(f"Saída nbconvert:\n{result_nbconvert.stdout}")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao executar o notebook {notebook_path}: {e}")
+        print(f"Stderr nbconvert:\n{e.stderr}")
+        return False
+30/3: print(f"Diretório de trabalho do script: {os.getcwd()}")
+30/4:
+if __name__ == "__main__":
+    extracao_path = "extracao_postgres.ipynb"
+    transformacao_path = "transformacao_alunos.ipynb"
+    refinamento_path = "refinamento.ipynb"
+    carga_path = "carga_dw.ipynb"
+
+    extracao_status = executar_notebook(extracao_path)
+    if extracao_status:
+        transformacao_status = executar_notebook(transformacao_path)
+        if transformacao_status:
+            refinamento_status = executar_notebook(refinamento_path)
+            if refinamento_status:
+                carga_status = executar_notebook(carga_path)
+                if carga_status:
+                    print("Pipeline completo executado com sucesso!")
+                else:
+                    print("Falha na etapa de Carga.")
+            else:
+                print("Falha na etapa de Refinamento.")
+        else:
+            print("Falha na etapa de Transformação.")
+    else:
+        print("Falha na etapa de Extração.")
+31/1: !pip install gspread google-auth oauth2client
+31/2:
+import gspread
+from google.oauth2.service_account import Credentials
+from pyspark.sql import SparkSession
+36/1:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoCSV") \
+    .getOrCreate()
+36/2:
+# Informações de conexão Minio
+minio_host = "http://localhost:9000"
+minio_access_key = "minioaccesskey"
+minio_secret_key = "miniosecretkey"
+minio_bucket_bronze = "bronze"
+
+spark.hadoop.conf.set("fs.s3a.endpoint", minio_host)
+spark.hadoop.conf.set("fs.s3a.access.key", minio_access_key)
+spark.hadoop.conf.set("fs.s3a.secret.key", minio_secret_key)
+spark.hadoop.conf.set("fs.s3a.path.style.access", "true")
+spark.hadoop.conf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+spark.hadoop.conf.set("fs.s3a.connection.ssl.enabled", "false")
+36/3:
+# Informações de conexão Minio
+minio_host = "http://localhost:9000"
+minio_access_key = "minioaccesskey"
+minio_secret_key = "miniosecretkey"
+minio_bucket_bronze = "bronze"
+
+hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+hadoop_conf.set("fs.s3a.endpoint", minio_host)
+hadoop_conf.set("fs.s3a.access.key", minio_access_key)
+hadoop_conf.set("fs.s3a.secret.key", minio_secret_key)
+hadoop_conf.set("fs.s3a.path.style.access", "true")
+hadoop_conf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+hadoop_conf.set("fs.s3a.connection.ssl.enabled", "false")
+36/4:
+# Caminho para a pasta de dados CSV
+csv_path = "notebooks/dados/"
+
+# Ler matricula_aulas.csv
+file_matricula_aulas = csv_path + "matricula_aulas.csv"
+df_matricula_aulas = spark.read.csv(file_matricula_aulas, header=True, inferSchema=True)
+print("Schema matricula_aulas:")
+df_matricula_aulas.printSchema()
+df_matricula_aulas.show(5)
+
+# Ler matricula_disciplinas.csv
+file_matricula_disciplinas = csv_path + "matricula_disciplinas.csv"
+df_matricula_disciplinas = spark.read.csv(file_matricula_disciplinas, header=True, inferSchema=True)
+print("\nSchema matricula_disciplinas:")
+df_matricula_disciplinas.printSchema()
+df_matricula_disciplinas.show(5)
+
+# Ler matricula_notas.csv
+file_matricula_notas = csv_path + "matricula_notas.csv"
+df_matricula_notas = spark.read.csv(file_matricula_notas, header=True, inferSchema=True)
+print("\nSchema matricula_notas:")
+df_matricula_notas.printSchema()
+df_matricula_notas.show(5)
+
+# Ler turma_avaliacoes.csv
+file_turma_avaliacoes = csv_path + "turma_avaliacoes.csv"
+df_turma_avaliacoes = spark.read.csv(file_turma_avaliacoes, header=True, inferSchema=True)
+print("\nSchema turma_avaliacoes:")
+df_turma_avaliacoes.printSchema()
+df_turma_avaliacoes.show(5)
+36/5:
+# Caminho para a pasta de dados CSV (relativo ao /notebooks/)
+csv_path = "dados/"
+
+# Ler matricula_aulas.csv
+file_matricula_aulas = csv_path + "matricula_aulas.csv"
+df_matricula_aulas = spark.read.csv(file_matricula_aulas, header=True, inferSchema=True)
+print("Schema matricula_aulas:")
+df_matricula_aulas.printSchema()
+df_matricula_aulas.show(5)
+
+# Ler matricula_disciplinas.csv
+file_matricula_disciplinas = csv_path + "matricula_disciplinas.csv"
+df_matricula_disciplinas = spark.read.csv(file_matricula_disciplinas, header=True, inferSchema=True)
+print("\nSchema matricula_disciplinas:")
+df_matricula_disciplinas.printSchema()
+df_matricula_disciplinas.show(5)
+
+# Ler matricula_notas.csv
+file_matricula_notas = csv_path + "matricula_notas.csv"
+df_matricula_notas = spark.read.csv(file_matricula_notas, header=True, inferSchema=True)
+print("\nSchema matricula_notas:")
+df_matricula_notas.printSchema()
+df_matricula_notas.show(5)
+
+# Ler turma_avaliacoes.csv
+file_turma_avaliacoes = csv_path + "turma_avaliacoes.csv"
+df_turma_avaliacoes = spark.read.csv(file_turma_avaliacoes, header=True, inferSchema=True)
+print("\nSchema turma_avaliacoes:")
+df_turma_avaliacoes.printSchema()
+df_turma_avaliacoes.show(5)
+36/6:
+# Escrever df_matricula_aulas no Minio (Bronze)
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas.write.mode("overwrite").parquet(path_matricula_aulas_bronze)
+print(f"Dados de matricula_aulas escritos em: {path_matricula_aulas_bronze}")
+
+# Escrever df_matricula_disciplinas no Minio (Bronze)
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas.write.mode("overwrite").parquet(path_matricula_disciplinas_bronze)
+print(f"Dados de matricula_disciplinas escritos em: {path_matricula_disciplinas_bronze}")
+
+# Escrever df_matricula_notas no Minio (Bronze)
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas.write.mode("overwrite").parquet(path_matricula_notas_bronze)
+print(f"Dados de matricula_notas escritos em: {path_matricula_notas_bronze}")
+
+# Escrever df_turma_avaliacoes no Minio (Bronze)
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes.write.mode("overwrite").parquet(path_turma_avaliacoes_bronze)
+print(f"Dados de turma_avaliacoes escritos em: {path_turma_avaliacoes_bronze}")
+
+# Parar a sessão Spark
+spark.stop()
+36/7:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoCSV") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .getOrCreate()
+
+# Informações de conexão Minio
+minio_host = "http://localhost:9000"
+minio_access_key = "minioaccesskey"
+minio_secret_key = "miniosecretkey"
+minio_bucket_bronze = "bronze"
+
+hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+hadoop_conf.set("fs.s3a.endpoint", minio_host)
+hadoop_conf.set("fs.s3a.access.key", minio_access_key)
+hadoop_conf.set("fs.s3a.secret.key", minio_secret_key)
+hadoop_conf.set("fs.s3a.path.style.access", "true")
+hadoop_conf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+hadoop_conf.set("fs.s3a.connection.ssl.enabled", "false")
+
+# Caminho para a pasta de dados CSV
+csv_path = "dados/"
+
+# Ler matricula_aulas.csv
+file_matricula_aulas = csv_path + "matricula_aulas.csv"
+df_matricula_aulas = spark.read.csv(file_matricula_aulas, header=True, inferSchema=True)
+print("Schema matricula_aulas:")
+df_matricula_aulas.printSchema()
+df_matricula_aulas.show(5)
+
+# Ler matricula_disciplinas.csv
+file_matricula_disciplinas = csv_path + "matricula_disciplinas.csv"
+df_matricula_disciplinas = spark.read.csv(file_matricula_disciplinas, header=True, inferSchema=True)
+print("\nSchema matricula_disciplinas:")
+df_matricula_disciplinas.printSchema()
+df_matricula_disciplinas.show(5)
+
+# Ler matricula_notas.csv
+file_matricula_notas = csv_path + "matricula_notas.csv"
+df_matricula_notas = spark.read.csv(file_matricula_notas, header=True, inferSchema=True)
+print("\nSchema matricula_notas:")
+df_matricula_notas.printSchema()
+df_matricula_notas.show(5)
+
+# Ler turma_avaliacoes.csv
+file_turma_avaliacoes = csv_path + "turma_avaliacoes.csv"
+df_turma_avaliacoes = spark.read.csv(file_turma_avaliacoes, header=True, inferSchema=True)
+print("\nSchema turma_avaliacoes:")
+df_turma_avaliacoes.printSchema()
+df_turma_avaliacoes.show(5)
+
+# Escrever df_matricula_aulas no Minio (Bronze)
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas.write.mode("overwrite").parquet(path_matricula_aulas_bronze)
+print(f"Dados de matricula_aulas escritos em: {path_matricula_aulas_bronze}")
+
+# Escrever df_matricula_disciplinas no Minio (Bronze)
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas.write.mode("overwrite").parquet(path_matricula_disciplinas_bronze)
+print(f"Dados de matricula_disciplinas escritos em: {path_matricula_disciplinas_bronze}")
+
+# Escrever df_matricula_notas no Minio (Bronze)
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas.write.mode("overwrite").parquet(path_matricula_notas_bronze)
+print(f"Dados de matricula_notas escritos em: {path_matricula_notas_bronze}")
+
+# Escrever df_turma_avaliacoes no Minio (Bronze)
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes.write.mode("overwrite").parquet(path_turma_avaliacoes_bronze)
+print(f"Dados de turma_avaliacoes escritos em: {path_turma_avaliacoes_bronze}")
+
+# Parar a sessão Spark
+spark.stop()
+37/1:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoCSV") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .getOrCreate()
+37/2:
+# Informações de conexão Minio
+minio_host = "http://localhost:9000"
+minio_access_key = "minioaccesskey"
+minio_secret_key = "miniosecretkey"
+minio_bucket_bronze = "bronze"
+
+hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+hadoop_conf.set("fs.s3a.endpoint", minio_host)
+hadoop_conf.set("fs.s3a.access.key", minio_access_key)
+hadoop_conf.set("fs.s3a.secret.key", minio_secret_key)
+hadoop_conf.set("fs.s3a.path.style.access", "true")
+hadoop_conf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+hadoop_conf.set("fs.s3a.connection.ssl.enabled", "false")
+37/3:
+# Caminho para a pasta de dados CSV (relativo a /notebooks/)
+csv_path = "dados/"
+
+# Ler matricula_aulas.csv
+file_matricula_aulas = csv_path + "matricula_aulas.csv"
+df_matricula_aulas = spark.read.csv(file_matricula_aulas, header=True, inferSchema=True)
+print("Schema matricula_aulas:")
+df_matricula_aulas.printSchema()
+df_matricula_aulas.show(5)
+
+# Ler matricula_disciplinas.csv
+file_matricula_disciplinas = csv_path + "matricula_disciplinas.csv"
+df_matricula_disciplinas = spark.read.csv(file_matricula_disciplinas, header=True, inferSchema=True)
+print("\nSchema matricula_disciplinas:")
+df_matricula_disciplinas.printSchema()
+df_matricula_disciplinas.show(5)
+
+# Ler matricula_notas.csv
+file_matricula_notas = csv_path + "matricula_notas.csv"
+df_matricula_notas = spark.read.csv(file_matricula_notas, header=True, inferSchema=True)
+print("\nSchema matricula_notas:")
+df_matricula_notas.printSchema()
+df_matricula_notas.show(5)
+
+# Ler turma_avaliacoes.csv
+file_turma_avaliacoes = csv_path + "turma_avaliacoes.csv"
+df_turma_avaliacoes = spark.read.csv(file_turma_avaliacoes, header=True, inferSchema=True)
+print("\nSchema turma_avaliacoes:")
+df_turma_avaliacoes.printSchema()
+df_turma_avaliacoes.show(5)
+37/4:
+# Escrever df_matricula_aulas no Minio (Bronze)
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas.write.mode("overwrite").parquet(path_matricula_aulas_bronze)
+print(f"Dados de matricula_aulas escritos em: {path_matricula_aulas_bronze}")
+
+# Escrever df_matricula_disciplinas no Minio (Bronze)
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas.write.mode("overwrite").parquet(path_matricula_disciplinas_bronze)
+print(f"Dados de matricula_disciplinas escritos em: {path_matricula_disciplinas_bronze}")
+
+# Escrever df_matricula_notas no Minio (Bronze)
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas.write.mode("overwrite").parquet(path_matricula_notas_bronze)
+print(f"Dados de matricula_notas escritos em: {path_matricula_notas_bronze}")
+
+# Escrever df_turma_avaliacoes no Minio (Bronze)
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes.write.mode("overwrite").parquet(path_turma_avaliacoes_bronze)
+print(f"Dados de turma_avaliacoes escritos em: {path_turma_avaliacoes_bronze}")
+
+# Parar a sessão Spark
+spark.stop()
+37/5:
+# Informações de conexão Minio
+minio_host = "http://localhost:9000"
+minio_access_key = "minioaccesskey"
+minio_secret_key = "miniosecretkey"
+minio_bucket_bronze = "bronze"
+
+hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+hadoop_conf.set("fs.s3a.endpoint", minio_host)
+hadoop_conf.set("fs.s3a.access.key", minio_access_key)
+hadoop_conf.set("fs.s3a.secret.key", minio_secret_key)
+hadoop_conf.set("fs.s3a.path.style.access", "true")
+hadoop_conf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+hadoop_conf.set("fs.s3a.connection.ssl.enabled", "false")
+38/1:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoCSV") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .getOrCreate()
+38/2:
+# Informações de conexão Minio
+minio_host = "http://localhost:9000"
+minio_access_key = "minioaccesskey"
+minio_secret_key = "miniosecretkey"
+minio_bucket_bronze = "bronze"
+
+hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+hadoop_conf.set("fs.s3a.endpoint", minio_host)
+hadoop_conf.set("fs.s3a.access.key", minio_access_key)
+hadoop_conf.set("fs.s3a.secret.key", minio_secret_key)
+hadoop_conf.set("fs.s3a.path.style.access", "true")
+hadoop_conf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+hadoop_conf.set("fs.s3a.connection.ssl.enabled", "false")
+38/3:
+# Caminho para a pasta de dados CSV (relativo a /notebooks/)
+csv_path = "dados/"
+
+# Ler matricula_aulas.csv
+file_matricula_aulas = csv_path + "matricula_aulas.csv"
+df_matricula_aulas = spark.read.csv(file_matricula_aulas, header=True, inferSchema=True)
+print("Schema matricula_aulas:")
+df_matricula_aulas.printSchema()
+df_matricula_aulas.show(5)
+
+# Ler matricula_disciplinas.csv
+file_matricula_disciplinas = csv_path + "matricula_disciplinas.csv"
+df_matricula_disciplinas = spark.read.csv(file_matricula_disciplinas, header=True, inferSchema=True)
+print("\nSchema matricula_disciplinas:")
+df_matricula_disciplinas.printSchema()
+df_matricula_disciplinas.show(5)
+
+# Ler matricula_notas.csv
+file_matricula_notas = csv_path + "matricula_notas.csv"
+df_matricula_notas = spark.read.csv(file_matricula_notas, header=True, inferSchema=True)
+print("\nSchema matricula_notas:")
+df_matricula_notas.printSchema()
+df_matricula_notas.show(5)
+
+# Ler turma_avaliacoes.csv
+file_turma_avaliacoes = csv_path + "turma_avaliacoes.csv"
+df_turma_avaliacoes = spark.read.csv(file_turma_avaliacoes, header=True, inferSchema=True)
+print("\nSchema turma_avaliacoes:")
+df_turma_avaliacoes.printSchema()
+df_turma_avaliacoes.show(5)
+38/4:
+# Escrever df_matricula_aulas no Minio (Bronze)
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas.write.mode("overwrite").parquet(path_matricula_aulas_bronze)
+print(f"Dados de matricula_aulas escritos em: {path_matricula_aulas_bronze}")
+
+# Escrever df_matricula_disciplinas no Minio (Bronze)
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas.write.mode("overwrite").parquet(path_matricula_disciplinas_bronze)
+print(f"Dados de matricula_disciplinas escritos em: {path_matricula_disciplinas_bronze}")
+
+# Escrever df_matricula_notas no Minio (Bronze)
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas.write.mode("overwrite").parquet(path_matricula_notas_bronze)
+print(f"Dados de matricula_notas escritos em: {path_matricula_notas_bronze}")
+
+# Escrever df_turma_avaliacoes no Minio (Bronze)
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes.write.mode("overwrite").parquet(path_turma_avaliacoes_bronze)
+print(f"Dados de turma_avaliacoes escritos em: {path_turma_avaliacoes_bronze}")
+
+# Parar a sessão Spark
+spark.stop()
+38/5:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoCSV") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+38/6:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoCSV") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+39/1:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoCSV") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://localhost:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+39/2:
+# Informações de conexão Minio
+minio_host = "http://localhost:9000"
+minio_access_key = "minioaccesskey"
+minio_secret_key = "miniosecretkey"
+minio_bucket_bronze = "bronze"
+
+hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+hadoop_conf.set("fs.s3a.endpoint", minio_host)
+hadoop_conf.set("fs.s3a.access.key", minio_access_key)
+hadoop_conf.set("fs.s3a.secret.key", minio_secret_key)
+hadoop_conf.set("fs.s3a.path.style.access", "true")
+hadoop_conf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+hadoop_conf.set("fs.s3a.connection.ssl.enabled", "false")
+39/3:
+# Caminho para a pasta de dados CSV (relativo a /notebooks/)
+csv_path = "dados/"
+
+# Ler matricula_aulas.csv
+file_matricula_aulas = csv_path + "matricula_aulas.csv"
+df_matricula_aulas = spark.read.csv(file_matricula_aulas, header=True, inferSchema=True)
+print("Schema matricula_aulas:")
+df_matricula_aulas.printSchema()
+df_matricula_aulas.show(5)
+
+# Ler matricula_disciplinas.csv
+file_matricula_disciplinas = csv_path + "matricula_disciplinas.csv"
+df_matricula_disciplinas = spark.read.csv(file_matricula_disciplinas, header=True, inferSchema=True)
+print("\nSchema matricula_disciplinas:")
+df_matricula_disciplinas.printSchema()
+df_matricula_disciplinas.show(5)
+
+# Ler matricula_notas.csv
+file_matricula_notas = csv_path + "matricula_notas.csv"
+df_matricula_notas = spark.read.csv(file_matricula_notas, header=True, inferSchema=True)
+print("\nSchema matricula_notas:")
+df_matricula_notas.printSchema()
+df_matricula_notas.show(5)
+
+# Ler turma_avaliacoes.csv
+file_turma_avaliacoes = csv_path + "turma_avaliacoes.csv"
+df_turma_avaliacoes = spark.read.csv(file_turma_avaliacoes, header=True, inferSchema=True)
+print("\nSchema turma_avaliacoes:")
+df_turma_avaliacoes.printSchema()
+df_turma_avaliacoes.show(5)
+39/4:
+# Escrever df_matricula_aulas no Minio (Bronze)
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas.write.mode("overwrite").parquet(path_matricula_aulas_bronze)
+print(f"Dados de matricula_aulas escritos em: {path_matricula_aulas_bronze}")
+
+# Escrever df_matricula_disciplinas no Minio (Bronze)
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas.write.mode("overwrite").parquet(path_matricula_disciplinas_bronze)
+print(f"Dados de matricula_disciplinas escritos em: {path_matricula_disciplinas_bronze}")
+
+# Escrever df_matricula_notas no Minio (Bronze)
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas.write.mode("overwrite").parquet(path_matricula_notas_bronze)
+print(f"Dados de matricula_notas escritos em: {path_matricula_notas_bronze}")
+
+# Escrever df_turma_avaliacoes no Minio (Bronze)
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes.write.mode("overwrite").parquet(path_turma_avaliacoes_bronze)
+print(f"Dados de turma_avaliacoes escritos em: {path_turma_avaliacoes_bronze}")
+
+# Parar a sessão Spark
+spark.stop()
+40/1:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoCSV") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.3:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+40/2:
+# Informações de conexão Minio
+minio_host = "http://localhost:9000"
+minio_access_key = "minioaccesskey"
+minio_secret_key = "miniosecretkey"
+minio_bucket_bronze = "bronze"
+
+hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+hadoop_conf.set("fs.s3a.endpoint", minio_host)
+hadoop_conf.set("fs.s3a.access.key", minio_access_key)
+hadoop_conf.set("fs.s3a.secret.key", minio_secret_key)
+hadoop_conf.set("fs.s3a.path.style.access", "true")
+hadoop_conf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+hadoop_conf.set("fs.s3a.connection.ssl.enabled", "false")
+40/3:
+# Caminho para a pasta de dados CSV (relativo a /notebooks/)
+csv_path = "dados/"
+
+# Ler matricula_aulas.csv
+file_matricula_aulas = csv_path + "matricula_aulas.csv"
+df_matricula_aulas = spark.read.csv(file_matricula_aulas, header=True, inferSchema=True)
+print("Schema matricula_aulas:")
+df_matricula_aulas.printSchema()
+df_matricula_aulas.show(5)
+
+# Ler matricula_disciplinas.csv
+file_matricula_disciplinas = csv_path + "matricula_disciplinas.csv"
+df_matricula_disciplinas = spark.read.csv(file_matricula_disciplinas, header=True, inferSchema=True)
+print("\nSchema matricula_disciplinas:")
+df_matricula_disciplinas.printSchema()
+df_matricula_disciplinas.show(5)
+
+# Ler matricula_notas.csv
+file_matricula_notas = csv_path + "matricula_notas.csv"
+df_matricula_notas = spark.read.csv(file_matricula_notas, header=True, inferSchema=True)
+print("\nSchema matricula_notas:")
+df_matricula_notas.printSchema()
+df_matricula_notas.show(5)
+
+# Ler turma_avaliacoes.csv
+file_turma_avaliacoes = csv_path + "turma_avaliacoes.csv"
+df_turma_avaliacoes = spark.read.csv(file_turma_avaliacoes, header=True, inferSchema=True)
+print("\nSchema turma_avaliacoes:")
+df_turma_avaliacoes.printSchema()
+df_turma_avaliacoes.show(5)
+40/4:
+# Escrever df_matricula_aulas no Minio (Bronze)
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas.write.mode("overwrite").parquet(path_matricula_aulas_bronze)
+print(f"Dados de matricula_aulas escritos em: {path_matricula_aulas_bronze}")
+
+# Escrever df_matricula_disciplinas no Minio (Bronze)
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas.write.mode("overwrite").parquet(path_matricula_disciplinas_bronze)
+print(f"Dados de matricula_disciplinas escritos em: {path_matricula_disciplinas_bronze}")
+
+# Escrever df_matricula_notas no Minio (Bronze)
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas.write.mode("overwrite").parquet(path_matricula_notas_bronze)
+print(f"Dados de matricula_notas escritos em: {path_matricula_notas_bronze}")
+
+# Escrever df_turma_avaliacoes no Minio (Bronze)
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes.write.mode("overwrite").parquet(path_turma_avaliacoes_bronze)
+print(f"Dados de turma_avaliacoes escritos em: {path_turma_avaliacoes_bronze}")
+
+# Parar a sessão Spark
+spark.stop()
+41/1:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoCSV") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.2:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+41/2:
+# Informações de conexão Minio
+minio_host = "http://localhost:9000"
+minio_access_key = "minioaccesskey"
+minio_secret_key = "miniosecretkey"
+minio_bucket_bronze = "bronze"
+
+hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+hadoop_conf.set("fs.s3a.endpoint", minio_host)
+hadoop_conf.set("fs.s3a.access.key", minio_access_key)
+hadoop_conf.set("fs.s3a.secret.key", minio_secret_key)
+hadoop_conf.set("fs.s3a.path.style.access", "true")
+hadoop_conf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+hadoop_conf.set("fs.s3a.connection.ssl.enabled", "false")
+41/3:
+# Caminho para a pasta de dados CSV (relativo a /notebooks/)
+csv_path = "dados/"
+
+# Ler matricula_aulas.csv
+file_matricula_aulas = csv_path + "matricula_aulas.csv"
+df_matricula_aulas = spark.read.csv(file_matricula_aulas, header=True, inferSchema=True)
+print("Schema matricula_aulas:")
+df_matricula_aulas.printSchema()
+df_matricula_aulas.show(5)
+
+# Ler matricula_disciplinas.csv
+file_matricula_disciplinas = csv_path + "matricula_disciplinas.csv"
+df_matricula_disciplinas = spark.read.csv(file_matricula_disciplinas, header=True, inferSchema=True)
+print("\nSchema matricula_disciplinas:")
+df_matricula_disciplinas.printSchema()
+df_matricula_disciplinas.show(5)
+
+# Ler matricula_notas.csv
+file_matricula_notas = csv_path + "matricula_notas.csv"
+df_matricula_notas = spark.read.csv(file_matricula_notas, header=True, inferSchema=True)
+print("\nSchema matricula_notas:")
+df_matricula_notas.printSchema()
+df_matricula_notas.show(5)
+
+# Ler turma_avaliacoes.csv
+file_turma_avaliacoes = csv_path + "turma_avaliacoes.csv"
+df_turma_avaliacoes = spark.read.csv(file_turma_avaliacoes, header=True, inferSchema=True)
+print("\nSchema turma_avaliacoes:")
+df_turma_avaliacoes.printSchema()
+df_turma_avaliacoes.show(5)
+41/4:
+# Escrever df_matricula_aulas no Minio (Bronze)
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas.write.mode("overwrite").parquet(path_matricula_aulas_bronze)
+print(f"Dados de matricula_aulas escritos em: {path_matricula_aulas_bronze}")
+
+# Escrever df_matricula_disciplinas no Minio (Bronze)
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas.write.mode("overwrite").parquet(path_matricula_disciplinas_bronze)
+print(f"Dados de matricula_disciplinas escritos em: {path_matricula_disciplinas_bronze}")
+
+# Escrever df_matricula_notas no Minio (Bronze)
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas.write.mode("overwrite").parquet(path_matricula_notas_bronze)
+print(f"Dados de matricula_notas escritos em: {path_matricula_notas_bronze}")
+
+# Escrever df_turma_avaliacoes no Minio (Bronze)
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes.write.mode("overwrite").parquet(path_turma_avaliacoes_bronze)
+print(f"Dados de turma_avaliacoes escritos em: {path_turma_avaliacoes_bronze}")
+
+# Parar a sessão Spark
+spark.stop()
+43/1:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("ExtracaoCSV") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+43/2:
+# Informações de conexão Minio
+minio_host = "http://localhost:9000"
+minio_access_key = "minioaccesskey"
+minio_secret_key = "miniosecretkey"
+minio_bucket_bronze = "bronze"
+
+hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+hadoop_conf.set("fs.s3a.endpoint", minio_host)
+hadoop_conf.set("fs.s3a.access.key", minio_access_key)
+hadoop_conf.set("fs.s3a.secret.key", minio_secret_key)
+hadoop_conf.set("fs.s3a.path.style.access", "true")
+hadoop_conf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+hadoop_conf.set("fs.s3a.connection.ssl.enabled", "false")
+43/3:
+# Caminho para a pasta de dados CSV (relativo a /notebooks/)
+csv_path = "dados/"
+
+# Ler matricula_aulas.csv
+file_matricula_aulas = csv_path + "matricula_aulas.csv"
+df_matricula_aulas = spark.read.csv(file_matricula_aulas, header=True, inferSchema=True)
+print("Schema matricula_aulas:")
+df_matricula_aulas.printSchema()
+df_matricula_aulas.show(5)
+
+# Ler matricula_disciplinas.csv
+file_matricula_disciplinas = csv_path + "matricula_disciplinas.csv"
+df_matricula_disciplinas = spark.read.csv(file_matricula_disciplinas, header=True, inferSchema=True)
+print("\nSchema matricula_disciplinas:")
+df_matricula_disciplinas.printSchema()
+df_matricula_disciplinas.show(5)
+
+# Ler matricula_notas.csv
+file_matricula_notas = csv_path + "matricula_notas.csv"
+df_matricula_notas = spark.read.csv(file_matricula_notas, header=True, inferSchema=True)
+print("\nSchema matricula_notas:")
+df_matricula_notas.printSchema()
+df_matricula_notas.show(5)
+
+# Ler turma_avaliacoes.csv
+file_turma_avaliacoes = csv_path + "turma_avaliacoes.csv"
+df_turma_avaliacoes = spark.read.csv(file_turma_avaliacoes, header=True, inferSchema=True)
+print("\nSchema turma_avaliacoes:")
+df_turma_avaliacoes.printSchema()
+df_turma_avaliacoes.show(5)
+43/4:
+# Escrever df_matricula_aulas no Minio (Bronze)
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas.write.mode("overwrite").parquet(path_matricula_aulas_bronze)
+print(f"Dados de matricula_aulas escritos em: {path_matricula_aulas_bronze}")
+
+# Escrever df_matricula_disciplinas no Minio (Bronze)
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas.write.mode("overwrite").parquet(path_matricula_disciplinas_bronze)
+print(f"Dados de matricula_disciplinas escritos em: {path_matricula_disciplinas_bronze}")
+
+# Escrever df_matricula_notas no Minio (Bronze)
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas.write.mode("overwrite").parquet(path_matricula_notas_bronze)
+print(f"Dados de matricula_notas escritos em: {path_matricula_notas_bronze}")
+
+# Escrever df_turma_avaliacoes no Minio (Bronze)
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes.write.mode("overwrite").parquet(path_turma_avaliacoes_bronze)
+print(f"Dados de turma_avaliacoes escritos em: {path_turma_avaliacoes_bronze}")
+
+# Parar a sessão Spark
+spark.stop()
+44/1:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("TransformacaoPrata") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas_bronze = spark.read.parquet(path_matricula_aulas_bronze)
+df_matricula_aulas_bronze.printSchema()
+df_matricula_aulas_bronze.show(5)
+
+# Repita para os outros DataFrames (matricula_disciplinas, matricula_notas, turma_avaliacoes)
+45/1:
+from pyspark.sql import SparkSession
+
+# Defina os nomes dos seus buckets no Minio
+minio_bucket_bronze = "bronze"
+minio_bucket_prata = "prata"
+
+spark = SparkSession.builder \
+    .appName("TransformacaoPrata") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+45/2:
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas_bronze = spark.read.parquet(path_matricula_aulas_bronze)
+print("Schema de matricula_aulas (Bronze):")
+df_matricula_aulas_bronze.printSchema()
+df_matricula_aulas_bronze.show(5)
+
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas_bronze = spark.read.parquet(path_matricula_disciplinas_bronze)
+print("\nSchema de matricula_disciplinas (Bronze):")
+df_matricula_disciplinas_bronze.printSchema()
+df_matricula_disciplinas_bronze.show(5)
+
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas_bronze = spark.read.parquet(path_matricula_notas_bronze)
+print("\nSchema de matricula_notas (Bronze):")
+df_matricula_notas_bronze.printSchema()
+df_matricula_notas_bronze.show(5)
+
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes_bronze = spark.read.parquet(path_turma_avaliacoes_bronze)
+print("\nSchema de turma_avaliacoes (Bronze):")
+df_turma_avaliacoes_bronze.printSchema()
+df_turma_avaliacoes_bronze.show(5)
+45/3:
+df_matricula_aulas_prata = df_matricula_aulas_bronze.select(
+    "id_turma_disciplina",
+    "id_aluno",
+    "data_matricula"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_aluno", "aluno_id") \
+ .withColumnRenamed("data_matricula", "data_cadastro_matricula")
+
+print("Schema de matricula_aulas (Prata):")
+df_matricula_aulas_prata.printSchema()
+df_matricula_aulas_prata.show(5)
+45/4:
+df_matricula_aulas_prata = df_matricula_aulas_bronze.select(
+    "id_turma_disciplina",
+    "id_aluno",
+    "data_matricula"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_aluno", "aluno_id") \
+ .withColumnRenamed("data_matricula", "data_cadastro_matricula")
+46/1:
+from pyspark.sql import SparkSession
+
+# Passo 1: Configurar o Spark
+minio_bucket_bronze = "bronze"
+minio_bucket_prata = "prata"
+
+spark = SparkSession.builder \
+    .appName("TransformacaoPrata") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+# Passo 2: Ler os dados da camada Bronze
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas_bronze = spark.read.parquet(path_matricula_aulas_bronze)
+print("Schema de matricula_aulas (Bronze):")
+df_matricula_aulas_bronze.printSchema()
+df_matricula_aulas_bronze.show(5)
+
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas_bronze = spark.read.parquet(path_matricula_disciplinas_bronze)
+print("\nSchema de matricula_disciplinas (Bronze):")
+df_matricula_disciplinas_bronze.printSchema()
+df_matricula_disciplinas_bronze.show(5)
+
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas_bronze = spark.read.parquet(path_matricula_notas_bronze)
+print("\nSchema de matricula_notas (Bronze):")
+df_matricula_notas_bronze.printSchema()
+df_matricula_notas_bronze.show(5)
+
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes_bronze = spark.read.parquet(path_turma_avaliacoes_bronze)
+print("\nSchema de turma_avaliacoes (Bronze):")
+df_turma_avaliacoes_bronze.printSchema()
+df_turma_avaliacoes_bronze.show(5)
+
+# Passo 3: Realizar transformações na camada Prata
+
+# Transformação de matricula_aulas
+df_matricula_aulas_prata = df_matricula_aulas_bronze.select(
+    "id_turma_disciplina",
+    "id_aluno",
+    "data_matricula"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_aluno", "aluno_id") \
+ .withColumnRenamed("data_matricula", "data_cadastro_matricula")
+
+print("\nSchema de matricula_aulas (Prata):")
+df_matricula_aulas_prata.printSchema()
+df_matricula_aulas_prata.show(5)
+
+# Transformação de matricula_disciplinas
+df_matricula_disciplinas_prata = df_matricula_disciplinas_bronze.select(
+    "id_turma_disciplina",
+    "id_disciplina"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id")
+
+print("\nSchema de matricula_disciplinas (Prata):")
+df_matricula_disciplinas_prata.printSchema()
+df_matricula_disciplinas_prata.show(5)
+
+# Join de matricula_aulas com matricula_disciplinas
+df_matriculas_completa_prata = df_matricula_aulas_prata.join(
+    df_matricula_disciplinas_prata,
+    "turma_disciplina_id",
+    "inner"
+)
+
+print("\nSchema de matriculas_completa (Prata):")
+df_matriculas_completa_prata.printSchema()
+df_matriculas_completa_prata.show(5)
+
+# Transformação de matricula_notas (selecionando colunas relevantes e renomeando)
+df_matricula_notas_prata = df_matricula_notas_bronze.select(
+    "id_turma_disciplina",
+    "id_aluno",
+    "nota"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_aluno", "aluno_id")
+
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+
+# Transformação de turma_avaliacoes (selecionando colunas relevantes e renomeando)
+df_turma_avaliacoes_prata = df_turma_avaliacoes_bronze.select(
+    "id_turma_disciplina",
+    "id_avaliacao",
+    "peso"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_avaliacao", "avaliacao_id")
+
+print("\nSchema de turma_avaliacoes (Prata):")
+df_turma_avaliacoes_prata.printSchema()
+df_turma_avaliacoes_prata.show(5)
+
+# Passo 4: Persistir os dados na camada Prata
+path_matricula_aulas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_aulas"
+df_matricula_aulas_prata.write.mode("overwrite").parquet(path_matricula_aulas_prata_parquet)
+print(f"\nDados de matricula_aulas (Prata) escritos em: {path_matricula_aulas_prata_parquet}")
+
+path_matricula_disciplinas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_disciplinas"
+df_matricula_disciplinas_prata.write.mode("overwrite").parquet(path_matricula_disciplinas_prata_parquet)
+print(f"Dados de matricula_disciplinas (Prata) escritos em: {path_matricula_disciplinas_prata_parquet}")
+
+path_matricula_notas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata.write.mode("overwrite").parquet(path_matricula_notas_prata_parquet)
+print(f"Dados de matricula_notas (Prata) escritos em: {path_matricula_notas_prata_parquet}")
+
+path_turma_avaliacoes_prata_parquet = f"s3a://{minio_bucket_prata}/turma_avaliacoes"
+df_turma_avaliacoes_prata.write.mode("overwrite").parquet(path_turma_avaliacoes_prata_parquet)
+print(f"Dados de turma_avaliacoes (Prata) escritos em: {path_turma_avaliacoes_prata_parquet}")
+
+path_matriculas_completa_prata_parquet = f"s3a://{minio_bucket_prata}/matriculas_completa"
+df_matriculas_completa_prata.write.mode("overwrite").parquet(path_matriculas_completa_prata_parquet)
+print(f"Dados completos de matrículas (Prata) escritos em: {path_matriculas_completa_prata_parquet}")
+
+# Passo 5: Parar a sessão Spark (opcional)
+spark.stop()
+48/1:
+from pyspark.sql import SparkSession
+
+# Passo 1: Configurar o Spark
+minio_bucket_bronze = "bronze"
+minio_bucket_prata = "prata"
+
+spark = SparkSession.builder \
+    .appName("TransformacaoPrata") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+# Passo 2: Ler os dados da camada Bronze
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas_bronze = spark.read.parquet(path_matricula_aulas_bronze)
+print("Schema de matricula_aulas (Bronze):")
+df_matricula_aulas_bronze.printSchema()
+df_matricula_aulas_bronze.show(5)
+
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas_bronze = spark.read.parquet(path_matricula_disciplinas_bronze)
+print("\nSchema de matricula_disciplinas (Bronze):")
+df_matricula_disciplinas_bronze.printSchema()
+df_matricula_disciplinas_bronze.show(5)
+
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas_bronze = spark.read.parquet(path_matricula_notas_bronze)
+print("\nSchema de matricula_notas (Bronze):")
+df_matricula_notas_bronze.printSchema()
+df_matricula_notas_bronze.show(5)
+
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes_bronze = spark.read.parquet(path_turma_avaliacoes_bronze)
+print("\nSchema de turma_avaliacoes (Bronze):")
+df_turma_avaliacoes_bronze.printSchema()
+df_turma_avaliacoes_bronze.show(5)
+
+# Passo 3: Realizar transformações na camada Prata
+
+# Transformação de matricula_aulas
+df_matricula_aulas_prata = df_matricula_aulas_bronze.select(
+    "id_turma_disciplina",
+    "id_aluno",
+    "data_matricula"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_aluno", "aluno_id") \
+ .withColumnRenamed("data_matricula", "data_cadastro_matricula")
+
+print("\nSchema de matricula_aulas (Prata):")
+df_matricula_aulas_prata.printSchema()
+df_matricula_aulas_prata.show(5)
+
+# Transformação de matricula_disciplinas
+df_matricula_disciplinas_prata = df_matricula_disciplinas_bronze.select(
+    "id_turma_disciplina",
+    "id_disciplina"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id")
+
+print("\nSchema de matricula_disciplinas (Prata):")
+df_matricula_disciplinas_prata.printSchema()
+df_matricula_disciplinas_prata.show(5)
+
+# Join de matricula_aulas com matricula_disciplinas
+df_matriculas_completa_prata = df_matricula_aulas_prata.join(
+    df_matricula_disciplinas_prata,
+    "turma_disciplina_id",
+    "inner"
+)
+
+print("\nSchema de matriculas_completa (Prata):")
+df_matriculas_completa_prata.printSchema()
+df_matriculas_completa_prata.show(5)
+
+# Transformação de matricula_notas (selecionando colunas relevantes e renomeando)
+df_matricula_notas_prata = df_matricula_notas_bronze.select(
+    "id_turma_disciplina",
+    "id_aluno",
+    "nota"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_aluno", "aluno_id")
+
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+
+# Transformação de turma_avaliacoes (selecionando colunas relevantes e renomeando)
+df_turma_avaliacoes_prata = df_turma_avaliacoes_bronze.select(
+    "id_turma_disciplina",
+    "id_avaliacao",
+    "peso"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_avaliacao", "avaliacao_id")
+
+print("\nSchema de turma_avaliacoes (Prata):")
+df_turma_avaliacoes_prata.printSchema()
+df_turma_avaliacoes_prata.show(5)
+
+# Passo 4: Persistir os dados na camada Prata
+path_matricula_aulas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_aulas"
+df_matricula_aulas_prata.write.mode("overwrite").parquet(path_matricula_aulas_prata_parquet)
+print(f"\nDados de matricula_aulas (Prata) escritos em: {path_matricula_aulas_prata_parquet}")
+
+path_matricula_disciplinas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_disciplinas"
+df_matricula_disciplinas_prata.write.mode("overwrite").parquet(path_matricula_disciplinas_prata_parquet)
+print(f"Dados de matricula_disciplinas (Prata) escritos em: {path_matricula_disciplinas_prata_parquet}")
+
+path_matricula_notas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata.write.mode("overwrite").parquet(path_matricula_notas_prata_parquet)
+print(f"Dados de matricula_notas (Prata) escritos em: {path_matricula_notas_prata_parquet}")
+
+path_turma_avaliacoes_prata_parquet = f"s3a://{minio_bucket_prata}/turma_avaliacoes"
+df_turma_avaliacoes_prata.write.mode("overwrite").parquet(path_turma_avaliacoes_prata_parquet)
+print(f"Dados de turma_avaliacoes (Prata) escritos em: {path_turma_avaliacoes_prata_parquet}")
+
+path_matriculas_completa_prata_parquet = f"s3a://{minio_bucket_prata}/matriculas_completa"
+df_matriculas_completa_prata.write.mode("overwrite").parquet(path_matriculas_completa_prata_parquet)
+print(f"Dados completos de matrículas (Prata) escritos em: {path_matriculas_completa_prata_parquet}")
+
+# Passo 5: Parar a sessão Spark (opcional)
+spark.stop()
+48/2: df_matricula_aulas_bronze.printSchema()
+49/1:
+# Passo 3: Realizar transformações na camada Prata
+
+# Transformação de matricula_aulas
+df_matricula_aulas_prata = df_matricula_aulas_bronze.select(
+    "id_matricula",
+    "id_disciplina",
+    "data_aula"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id") \
+ .withColumnRenamed("data_aula", "aula_data")
+
+print("\nSchema de matricula_aulas (Prata):")
+df_matricula_aulas_prata.printSchema()
+df_matricula_aulas_prata.show(5)
+
+# Transformação de matricula_disciplinas
+df_matricula_disciplinas_prata = df_matricula_disciplinas_bronze.select(
+    "id_turma_disciplina",
+    "id_disciplina"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id")
+
+print("\nSchema de matricula_disciplinas (Prata):")
+df_matricula_disciplinas_prata.printSchema()
+df_matricula_disciplinas_prata.show(5)
+
+# Join de matricula_aulas com matricula_disciplinas
+df_matriculas_completa_prata = df_matricula_aulas_prata.join(
+    df_matricula_disciplinas_prata,
+    "disciplina_id",
+    "inner"
+)
+
+print("\nSchema de matriculas_completa (Prata):")
+df_matriculas_completa_prata.printSchema()
+df_matriculas_completa_prata.show(5)
+
+# Transformação de matricula_notas (selecionando colunas relevantes e renomeando)
+df_matricula_notas_prata = df_matricula_notas_bronze.select(
+    "id_turma_disciplina",
+    "id_aluno",
+    "nota"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_aluno", "aluno_id")
+
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+
+# Transformação de turma_avaliacoes (selecionando colunas relevantes e renomeando)
+df_turma_avaliacoes_prata = df_turma_avaliacoes_bronze.select(
+    "id_turma_disciplina",
+    "id_avaliacao",
+    "peso"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_avaliacao", "avaliacao_id")
+
+print("\nSchema de turma_avaliacoes (Prata):")
+df_turma_avaliacoes_prata.printSchema()
+df_turma_avaliacoes_prata.show(5)
+50/1:
+from pyspark.sql import SparkSession
+
+# Passo 1: Configurar o Spark
+minio_bucket_bronze = "bronze"
+minio_bucket_prata = "prata"
+
+spark = SparkSession.builder \
+    .appName("TransformacaoPrata") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+# Passo 2: Ler os dados da camada Bronze
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas_bronze = spark.read.parquet(path_matricula_aulas_bronze)
+print("Schema de matricula_aulas (Bronze):")
+df_matricula_aulas_bronze.printSchema()
+df_matricula_aulas_bronze.show(5)
+
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas_bronze = spark.read.parquet(path_matricula_disciplinas_bronze)
+print("\nSchema de matricula_disciplinas (Bronze):")
+df_matricula_disciplinas_bronze.printSchema()
+df_matricula_disciplinas_bronze.show(5)
+
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas_bronze = spark.read.parquet(path_matricula_notas_bronze)
+print("\nSchema de matricula_notas (Bronze):")
+df_matricula_notas_bronze.printSchema()
+df_matricula_notas_bronze.show(5)
+
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes_bronze = spark.read.parquet(path_turma_avaliacoes_bronze)
+print("\nSchema de turma_avaliacoes (Bronze):")
+df_turma_avaliacoes_bronze.printSchema()
+df_turma_avaliacoes_bronze.show(5)
+
+# Passo 3: Realizar transformações na camada Prata
+
+# Transformação de matricula_aulas
+df_matricula_aulas_prata = df_matricula_aulas_bronze.select(
+    "id_matricula",
+    "id_disciplina",
+    "data_aula"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id") \
+ .withColumnRenamed("data_aula", "aula_data")
+
+print("\nSchema de matricula_aulas (Prata):")
+df_matricula_aulas_prata.printSchema()
+df_matricula_aulas_prata.show(5)
+
+# Transformação de matricula_disciplinas
+df_matricula_disciplinas_prata = df_matricula_disciplinas_bronze.select(
+    "id_turma_disciplina",
+    "id_disciplina"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id")
+
+print("\nSchema de matricula_disciplinas (Prata):")
+df_matricula_disciplinas_prata.printSchema()
+df_matricula_disciplinas_prata.show(5)
+
+# Join de matricula_aulas com matricula_disciplinas
+df_matriculas_completa_prata = df_matricula_aulas_prata.join(
+    df_matricula_disciplinas_prata,
+    "disciplina_id",
+    "inner"
+)
+
+print("\nSchema de matriculas_completa (Prata):")
+df_matriculas_completa_prata.printSchema()
+df_matriculas_completa_prata.show(5)
+
+# Transformação de matricula_notas (selecionando colunas relevantes e renomeando)
+df_matricula_notas_prata = df_matricula_notas_bronze.select(
+    "id_turma_disciplina",
+    "id_aluno",
+    "nota"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_aluno", "aluno_id")
+
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+
+# Transformação de turma_avaliacoes (selecionando colunas relevantes e renomeando)
+df_turma_avaliacoes_prata = df_turma_avaliacoes_bronze.select(
+    "id_turma_disciplina",
+    "id_avaliacao",
+    "peso"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_avaliacao", "avaliacao_id")
+
+print("\nSchema de turma_avaliacoes (Prata):")
+df_turma_avaliacoes_prata.printSchema()
+df_turma_avaliacoes_prata.show(5)
+
+# Passo 4: Persistir os dados na camada Prata
+path_matricula_aulas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_aulas"
+df_matricula_aulas_prata.write.mode("overwrite").parquet(path_matricula_aulas_prata_parquet)
+print(f"\nDados de matricula_aulas (Prata) escritos em: {path_matricula_aulas_prata_parquet}")
+
+path_matricula_disciplinas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_disciplinas"
+df_matricula_disciplinas_prata.write.mode("overwrite").parquet(path_matricula_disciplinas_prata_parquet)
+print(f"Dados de matricula_disciplinas (Prata) escritos em: {path_matricula_disciplinas_prata_parquet}")
+
+path_matricula_notas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata.write.mode("overwrite").parquet(path_matricula_notas_prata_parquet)
+print(f"Dados de matricula_notas (Prata) escritos em: {path_matricula_notas_prata_parquet}")
+
+path_turma_avaliacoes_prata_parquet = f"s3a://{minio_bucket_prata}/turma_avaliacoes"
+df_turma_avaliacoes_prata.write.mode("overwrite").parquet(path_turma_avaliacoes_prata_parquet)
+print(f"Dados de turma_avaliacoes (Prata) escritos em: {path_turma_avaliacoes_prata_parquet}")
+
+path_matriculas_completa_prata_parquet = f"s3a://{minio_bucket_prata}/matriculas_completa"
+df_matriculas_completa_prata.write.mode("overwrite").parquet(path_matriculas_completa_prata_parquet)
+print(f"Dados completos de matrículas (Prata) escritos em: {path_matriculas_completa_prata_parquet}")
+
+# Passo 5: Parar a sessão Spark (opcional)
+spark.stop()
+50/2: df_matricula_aulas_bronze.printSchema()
+50/3: df_matricula_aulas_bronze.printSchema()
+50/4: df_matricula_disciplinas_bronze.printSchema()
+51/1:
+from pyspark.sql import SparkSession
+
+# Passo 1: Configurar o Spark
+minio_bucket_bronze = "bronze"
+minio_bucket_prata = "prata"
+
+spark = SparkSession.builder \
+    .appName("TransformacaoPrata") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+# Passo 2: Ler os dados da camada Bronze
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas_bronze = spark.read.parquet(path_matricula_aulas_bronze)
+print("Schema de matricula_aulas (Bronze):")
+df_matricula_aulas_bronze.printSchema()
+df_matricula_aulas_bronze.show(5)
+
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas_bronze = spark.read.parquet(path_matricula_disciplinas_bronze)
+print("\nSchema de matricula_disciplinas (Bronze):")
+df_matricula_disciplinas_bronze.printSchema()
+df_matricula_disciplinas_bronze.show(5)
+
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas_bronze = spark.read.parquet(path_matricula_notas_bronze)
+print("\nSchema de matricula_notas (Bronze):")
+df_matricula_notas_bronze.printSchema()
+df_matricula_notas_bronze.show(5)
+
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes_bronze = spark.read.parquet(path_turma_avaliacoes_bronze)
+print("\nSchema de turma_avaliacoes (Bronze):")
+df_turma_avaliacoes_bronze.printSchema()
+df_turma_avaliacoes_bronze.show(5)
+
+# Passo 3: Realizar transformações na camada Prata
+
+# Transformação de matricula_aulas
+df_matricula_aulas_prata = df_matricula_aulas_bronze.select(
+    "id_matricula",
+    "id_disciplina",
+    "data_aula"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id") \
+ .withColumnRenamed("data_aula", "aula_data")
+
+print("\nSchema de matricula_aulas (Prata):")
+df_matricula_aulas_prata.printSchema()
+df_matricula_aulas_prata.show(5)
+
+# Transformação de matricula_disciplinas
+df_matricula_disciplinas_prata = df_matricula_disciplinas_bronze.select(
+    "id_matricula",
+    "id_disciplina"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id")
+
+print("\nSchema de matricula_disciplinas (Prata):")
+df_matricula_disciplinas_prata.printSchema()
+df_matricula_disciplinas_prata.show(5)
+
+# Join de matricula_aulas com matricula_disciplinas
+df_matriculas_completa_prata = df_matricula_aulas_prata.join(
+    df_matricula_disciplinas_prata,
+    ["matricula_id", "disciplina_id"],
+    "inner"
+)
+
+print("\nSchema de matriculas_completa (Prata):")
+df_matriculas_completa_prata.printSchema()
+df_matriculas_completa_prata.show(5)
+
+# Transformação de matricula_notas (selecionando colunas relevantes e renomeando)
+df_matricula_notas_prata = df_matricula_notas_bronze.select(
+    "id_turma_disciplina",
+    "id_aluno",
+    "nota"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_aluno", "aluno_id")
+
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+
+# Transformação de turma_avaliacoes (selecionando colunas relevantes e renomeando)
+df_turma_avaliacoes_prata = df_turma_avaliacoes_bronze.select(
+    "id_turma_disciplina",
+    "id_avaliacao",
+    "peso"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_avaliacao", "avaliacao_id")
+
+print("\nSchema de turma_avaliacoes (Prata):")
+df_turma_avaliacoes_prata.printSchema()
+df_turma_avaliacoes_prata.show(5)
+
+# Passo 4: Persistir os dados na camada Prata
+path_matricula_aulas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_aulas"
+df_matricula_aulas_prata.write.mode("overwrite").parquet(path_matricula_aulas_prata_parquet)
+print(f"\nDados de matricula_aulas (Prata) escritos em: {path_matricula_aulas_prata_parquet}")
+
+path_matricula_disciplinas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_disciplinas"
+df_matricula_disciplinas_prata.write.mode("overwrite").parquet(path_matricula_disciplinas_prata_parquet)
+print(f"Dados de matricula_disciplinas (Prata) escritos em: {path_matricula_disciplinas_prata_parquet}")
+
+path_matricula_notas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata.write.mode("overwrite").parquet(path_matricula_notas_prata_parquet)
+print(f"Dados de matricula_notas (Prata) escritos em: {path_matricula_notas_prata_parquet}")
+
+path_turma_avaliacoes_prata_parquet = f"s3a://{minio_bucket_prata}/turma_avaliacoes"
+df_turma_avaliacoes_prata.write.mode("overwrite").parquet(path_turma_avaliacoes_prata_parquet)
+print(f"Dados de turma_avaliacoes (Prata) escritos em: {path_turma_avaliacoes_prata_parquet}")
+
+path_matriculas_completa_prata_parquet = f"s3a://{minio_bucket_prata}/matriculas_completa"
+df_matriculas_completa_prata.write.mode("overwrite").parquet(path_matriculas_completa_prata_parquet)
+print(f"Dados completos de matrículas (Prata) escritos em: {path_matriculas_completa_prata_parquet}")
+
+# Passo 5: Parar a sessão Spark (opcional)
+spark.stop()
+51/2: df_matricula_notas_bronze.printSchema()
+52/1:
+from pyspark.sql import SparkSession
+
+# Passo 1: Configurar o Spark
+minio_bucket_bronze = "bronze"
+minio_bucket_prata = "prata"
+
+spark = SparkSession.builder \
+    .appName("TransformacaoPrata") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+# Passo 2: Ler os dados da camada Bronze
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas_bronze = spark.read.parquet(path_matricula_aulas_bronze)
+print("Schema de matricula_aulas (Bronze):")
+df_matricula_aulas_bronze.printSchema()
+df_matricula_aulas_bronze.show(5)
+
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas_bronze = spark.read.parquet(path_matricula_disciplinas_bronze)
+print("\nSchema de matricula_disciplinas (Bronze):")
+df_matricula_disciplinas_bronze.printSchema()
+df_matricula_disciplinas_bronze.show(5)
+
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas_bronze = spark.read.parquet(path_matricula_notas_bronze)
+print("\nSchema de matricula_notas (Bronze):")
+df_matricula_notas_bronze.printSchema()
+df_matricula_notas_bronze.show(5)
+
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes_bronze = spark.read.parquet(path_turma_avaliacoes_bronze)
+print("\nSchema de turma_avaliacoes (Bronze):")
+df_turma_avaliacoes_bronze.printSchema()
+df_turma_avaliacoes_bronze.show(5)
+
+# Passo 3: Realizar transformações na camada Prata
+
+# Transformação de matricula_aulas
+df_matricula_aulas_prata = df_matricula_aulas_bronze.select(
+    "id_matricula",
+    "id_disciplina",
+    "data_aula"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id") \
+ .withColumnRenamed("data_aula", "aula_data")
+
+print("\nSchema de matricula_aulas (Prata):")
+df_matricula_aulas_prata.printSchema()
+df_matricula_aulas_prata.show(5)
+
+# Transformação de matricula_disciplinas
+df_matricula_disciplinas_prata = df_matricula_disciplinas_bronze.select(
+    "id_matricula",
+    "id_disciplina"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id")
+
+print("\nSchema de matricula_disciplinas (Prata):")
+df_matricula_disciplinas_prata.printSchema()
+df_matricula_disciplinas_prata.show(5)
+
+# Join de matricula_aulas com matricula_disciplinas
+df_matriculas_completa_prata = df_matricula_aulas_prata.join(
+    df_matricula_disciplinas_prata,
+    ["matricula_id", "disciplina_id"],
+    "inner"
+)
+
+print("\nSchema de matriculas_completa (Prata):")
+df_matriculas_completa_prata.printSchema()
+df_matriculas_completa_prata.show(5)
+
+# Transformação de matricula_notas (selecionando colunas relevantes e renomeando)
+df_matricula_notas_prata = df_matricula_notas_bronze.select(
+    "id_matricula",
+    "id_disciplina",
+    "nota"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id")
+
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+
+# Transformação de turma_avaliacoes (selecionando colunas relevantes e renomeando)
+df_turma_avaliacoes_prata = df_turma_avaliacoes_bronze.select(
+    "id_turma_disciplina",
+    "id_avaliacao",
+    "peso"
+).withColumnRenamed("id_turma_disciplina", "turma_disciplina_id") \
+ .withColumnRenamed("id_avaliacao", "avaliacao_id")
+
+print("\nSchema de turma_avaliacoes (Prata):")
+df_turma_avaliacoes_prata.printSchema()
+df_turma_avaliacoes_prata.show(5)
+
+# Passo 4: Persistir os dados na camada Prata
+path_matricula_aulas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_aulas"
+df_matricula_aulas_prata.write.mode("overwrite").parquet(path_matricula_aulas_prata_parquet)
+print(f"\nDados de matricula_aulas (Prata) escritos em: {path_matricula_aulas_prata_parquet}")
+
+path_matricula_disciplinas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_disciplinas"
+df_matricula_disciplinas_prata.write.mode("overwrite").parquet(path_matricula_disciplinas_prata_parquet)
+print(f"Dados de matricula_disciplinas (Prata) escritos em: {path_matricula_disciplinas_prata_parquet}")
+
+path_matricula_notas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata.write.mode("overwrite").parquet(path_matricula_notas_prata_parquet)
+print(f"Dados de matricula_notas (Prata) escritos em: {path_matricula_notas_prata_parquet}")
+
+path_turma_avaliacoes_prata_parquet = f"s3a://{minio_bucket_prata}/turma_avaliacoes"
+df_turma_avaliacoes_prata.write.mode("overwrite").parquet(path_turma_avaliacoes_prata_parquet)
+print(f"Dados de turma_avaliacoes (Prata) escritos em: {path_turma_avaliacoes_prata_parquet}")
+
+path_matriculas_completa_prata_parquet = f"s3a://{minio_bucket_prata}/matriculas_completa"
+df_matriculas_completa_prata.write.mode("overwrite").parquet(path_matriculas_completa_prata_parquet)
+print(f"Dados completos de matrículas (Prata) escritos em: {path_matriculas_completa_prata_parquet}")
+
+# Passo 5: Parar a sessão Spark (opcional)
+spark.stop()
+52/2: df_turma_avaliacoes_bronze.printSchema()
+53/1:
+from pyspark.sql import SparkSession
+
+# Passo 1: Configurar o Spark
+minio_bucket_bronze = "bronze"
+minio_bucket_prata = "prata"
+
+spark = SparkSession.builder \
+    .appName("TransformacaoPrata") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+# Passo 2: Ler os dados da camada Bronze
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas_bronze = spark.read.parquet(path_matricula_aulas_bronze)
+print("Schema de matricula_aulas (Bronze):")
+df_matricula_aulas_bronze.printSchema()
+df_matricula_aulas_bronze.show(5)
+
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas_bronze = spark.read.parquet(path_matricula_disciplinas_bronze)
+print("\nSchema de matricula_disciplinas (Bronze):")
+df_matricula_disciplinas_bronze.printSchema()
+df_matricula_disciplinas_bronze.show(5)
+
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas_bronze = spark.read.parquet(path_matricula_notas_bronze)
+print("\nSchema de matricula_notas (Bronze):")
+df_matricula_notas_bronze.printSchema()
+df_matricula_notas_bronze.show(5)
+
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes_bronze = spark.read.parquet(path_turma_avaliacoes_bronze)
+print("\nSchema de turma_avaliacoes (Bronze):")
+df_turma_avaliacoes_bronze.printSchema()
+df_turma_avaliacoes_bronze.show(5)
+
+# Passo 3: Realizar transformações na camada Prata
+
+# Transformação de matricula_aulas
+df_matricula_aulas_prata = df_matricula_aulas_bronze.select(
+    "id_matricula",
+    "id_disciplina",
+    "data_aula"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id") \
+ .withColumnRenamed("data_aula", "aula_data")
+
+print("\nSchema de matricula_aulas (Prata):")
+df_matricula_aulas_prata.printSchema()
+df_matricula_aulas_prata.show(5)
+
+# Transformação de matricula_disciplinas
+df_matricula_disciplinas_prata = df_matricula_disciplinas_bronze.select(
+    "id_matricula",
+    "id_disciplina"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id")
+
+print("\nSchema de matricula_disciplinas (Prata):")
+df_matricula_disciplinas_prata.printSchema()
+df_matricula_disciplinas_prata.show(5)
+
+# Join de matricula_aulas com matricula_disciplinas
+df_matriculas_completa_prata = df_matricula_aulas_prata.join(
+    df_matricula_disciplinas_prata,
+    ["matricula_id", "disciplina_id"],
+    "inner"
+)
+
+print("\nSchema de matriculas_completa (Prata):")
+df_matriculas_completa_prata.printSchema()
+df_matriculas_completa_prata.show(5)
+
+# Transformação de matricula_notas (selecionando colunas relevantes e renomeando)
+df_matricula_notas_prata = df_matricula_notas_bronze.select(
+    "id_matricula",
+    "id_disciplina",
+    "nota"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id")
+
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+
+# Transformação de turma_avaliacoes (selecionando colunas relevantes e renomeando)
+df_turma_avaliacoes_prata = df_turma_avaliacoes_bronze.select(
+    "id_turma",
+    "id_disciplina",
+    "titulo"
+).withColumnRenamed("id_turma", "turma_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id") \
+ .withColumnRenamed("titulo", "avaliacao_titulo")
+
+print("\nSchema de turma_avaliacoes (Prata):")
+df_turma_avaliacoes_prata.printSchema()
+df_turma_avaliacoes_prata.show(5)
+
+# Passo 4: Persistir os dados na camada Prata
+path_matricula_aulas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_aulas"
+df_matricula_aulas_prata.write.mode("overwrite").parquet(path_matricula_aulas_prata_parquet)
+print(f"\nDados de matricula_aulas (Prata) escritos em: {path_matricula_aulas_prata_parquet}")
+
+path_matricula_disciplinas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_disciplinas"
+df_matricula_disciplinas_prata.write.mode("overwrite").parquet(path_matricula_disciplinas_prata_parquet)
+print(f"Dados de matricula_disciplinas (Prata) escritos em: {path_matricula_disciplinas_prata_parquet}")
+
+path_matricula_notas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata.write.mode("overwrite").parquet(path_matricula_notas_prata_parquet)
+print(f"Dados de matricula_notas (Prata) escritos em: {path_matricula_notas_prata_parquet}")
+
+path_turma_avaliacoes_prata_parquet = f"s3a://{minio_bucket_prata}/turma_avaliacoes"
+df_turma_avaliacoes_prata.write.mode("overwrite").parquet(path_turma_avaliacoes_prata_parquet)
+print(f"Dados de turma_avaliacoes (Prata) escritos em: {path_turma_avaliacoes_prata_parquet}")
+
+path_matriculas_completa_prata_parquet = f"s3a://{minio_bucket_prata}/matriculas_completa"
+df_matriculas_completa_prata.write.mode("overwrite").parquet(path_matriculas_completa_prata_parquet)
+print(f"Dados completos de matrículas (Prata) escritos em: {path_matriculas_completa_prata_parquet}")
+
+# Passo 5: Parar a sessão Spark (opcional)
+spark.stop()
+54/1:
+from pyspark.sql import SparkSession
+
+# Passo 1: Configurar o Spark
+minio_bucket_bronze = "bronze"
+minio_bucket_prata = "prata"
+
+spark = SparkSession.builder \
+    .appName("TransformacaoPrata") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+# Passo 2: Ler os dados da camada Bronze
+path_matricula_aulas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_aulas"
+df_matricula_aulas_bronze = spark.read.parquet(path_matricula_aulas_bronze)
+print("Schema de matricula_aulas (Bronze):")
+df_matricula_aulas_bronze.printSchema()
+df_matricula_aulas_bronze.show(5)
+
+path_matricula_disciplinas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_disciplinas"
+df_matricula_disciplinas_bronze = spark.read.parquet(path_matricula_disciplinas_bronze)
+print("\nSchema de matricula_disciplinas (Bronze):")
+df_matricula_disciplinas_bronze.printSchema()
+df_matricula_disciplinas_bronze.show(5)
+
+path_matricula_notas_bronze = f"s3a://{minio_bucket_bronze}/csv/matricula_notas"
+df_matricula_notas_bronze = spark.read.parquet(path_matricula_notas_bronze)
+print("\nSchema de matricula_notas (Bronze):")
+df_matricula_notas_bronze.printSchema()
+df_matricula_notas_bronze.show(5)
+
+path_turma_avaliacoes_bronze = f"s3a://{minio_bucket_bronze}/csv/turma_avaliacoes"
+df_turma_avaliacoes_bronze = spark.read.parquet(path_turma_avaliacoes_bronze)
+print("\nSchema de turma_avaliacoes (Bronze):")
+df_turma_avaliacoes_bronze.printSchema()
+df_turma_avaliacoes_bronze.show(5)
+
+# Passo 3: Realizar transformações na camada Prata
+
+# Transformação de matricula_aulas
+df_matricula_aulas_prata = df_matricula_aulas_bronze.select(
+    "id_matricula",
+    "id_disciplina",
+    "data_aula"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id") \
+ .withColumnRenamed("data_aula", "aula_data")
+
+print("\nSchema de matricula_aulas (Prata):")
+df_matricula_aulas_prata.printSchema()
+df_matricula_aulas_prata.show(5)
+
+# Transformação de matricula_disciplinas
+df_matricula_disciplinas_prata = df_matricula_disciplinas_bronze.select(
+    "id_matricula",
+    "id_disciplina"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id")
+
+print("\nSchema de matricula_disciplinas (Prata):")
+df_matricula_disciplinas_prata.printSchema()
+df_matricula_disciplinas_prata.show(5)
+
+# Join de matricula_aulas com matricula_disciplinas
+df_matriculas_completa_prata = df_matricula_aulas_prata.join(
+    df_matricula_disciplinas_prata,
+    ["matricula_id", "disciplina_id"],
+    "inner"
+)
+
+print("\nSchema de matriculas_completa (Prata):")
+df_matriculas_completa_prata.printSchema()
+df_matriculas_completa_prata.show(5)
+
+# Transformação de matricula_notas (selecionando colunas relevantes e renomeando)
+df_matricula_notas_prata = df_matricula_notas_bronze.select(
+    "id_matricula",
+    "id_disciplina",
+    "nota"
+).withColumnRenamed("id_matricula", "matricula_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id")
+
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+
+# Transformação de turma_avaliacoes (selecionando colunas relevantes e renomeando)
+df_turma_avaliacoes_prata = df_turma_avaliacoes_bronze.select(
+    "id_turma",
+    "id_disciplina",
+    "titulo"
+).withColumnRenamed("id_turma", "turma_id") \
+ .withColumnRenamed("id_disciplina", "disciplina_id") \
+ .withColumnRenamed("titulo", "avaliacao_titulo")
+
+print("\nSchema de turma_avaliacoes (Prata):")
+df_turma_avaliacoes_prata.printSchema()
+df_turma_avaliacoes_prata.show(5)
+
+# Passo 4: Persistir os dados na camada Prata
+path_matricula_aulas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_aulas"
+df_matricula_aulas_prata.write.mode("overwrite").parquet(path_matricula_aulas_prata_parquet)
+print(f"\nDados de matricula_aulas (Prata) escritos em: {path_matricula_aulas_prata_parquet}")
+
+path_matricula_disciplinas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_disciplinas"
+df_matricula_disciplinas_prata.write.mode("overwrite").parquet(path_matricula_disciplinas_prata_parquet)
+print(f"Dados de matricula_disciplinas (Prata) escritos em: {path_matricula_disciplinas_prata_parquet}")
+
+path_matricula_notas_prata_parquet = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata.write.mode("overwrite").parquet(path_matricula_notas_prata_parquet)
+print(f"Dados de matricula_notas (Prata) escritos em: {path_matricula_notas_prata_parquet}")
+
+path_turma_avaliacoes_prata_parquet = f"s3a://{minio_bucket_prata}/turma_avaliacoes"
+df_turma_avaliacoes_prata.write.mode("overwrite").parquet(path_turma_avaliacoes_prata_parquet)
+print(f"Dados de turma_avaliacoes (Prata) escritos em: {path_turma_avaliacoes_prata_parquet}")
+
+path_matriculas_completa_prata_parquet = f"s3a://{minio_bucket_prata}/matriculas_completa"
+df_matriculas_completa_prata.write.mode("overwrite").parquet(path_matriculas_completa_prata_parquet)
+print(f"Dados completos de matrículas (Prata) escritos em: {path_matriculas_completa_prata_parquet}")
+
+# Passo 5: Parar a sessão Spark (opcional)
+spark.stop()
+54/2:
+path_matricula_aulas_prata = "s3a://prata/matricula_aulas"
+df_matricula_aulas_prata = spark.read.parquet(path_matricula_aulas_prata)
+
+path_matricula_disciplinas_prata = "s3a://prata/matricula_disciplinas"
+df_matricula_disciplinas_prata = spark.read.parquet(path_matricula_disciplinas_prata)
+
+path_matricula_notas_prata = "s3a://prata/matricula_notas"
+df_matricula_notas_prata = spark.read.parquet(path_matricula_notas_prata)
+
+path_turma_avaliacoes_prata = "s3a://prata/turma_avaliacoes"
+df_turma_avaliacoes_prata = spark.read.parquet(path_turma_avaliacoes_prata)
+
+path_matriculas_completa_prata = "s3a://prata/matriculas_completa"
+df_matriculas_completa_prata = spark.read.parquet(path_matriculas_completa_prata)
+56/1:
+path_matricula_aulas_prata = "s3a://prata/matricula_aulas"
+df_matricula_aulas_prata = spark.read.parquet(path_matricula_aulas_prata)
+
+path_matricula_disciplinas_prata = "s3a://prata/matricula_disciplinas"
+df_matricula_disciplinas_prata = spark.read.parquet(path_matricula_disciplinas_prata)
+
+path_matricula_notas_prata = "s3a://prata/matricula_notas"
+df_matricula_notas_prata = spark.read.parquet(path_matricula_notas_prata)
+
+path_turma_avaliacoes_prata = "s3a://prata/turma_avaliacoes"
+df_turma_avaliacoes_prata = spark.read.parquet(path_turma_avaliacoes_prata)
+
+path_matriculas_completa_prata = "s3a://prata/matriculas_completa"
+df_matriculas_completa_prata = spark.read.parquet(path_matriculas_completa_prata)
+56/2:
+from pyspark.sql import SparkSession
+
+# Configurar os nomes dos buckets
+minio_bucket_prata = "prata"
+minio_bucket_ouro = "ouro"
+
+# Configurar a sessão Spark
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+57/1:
+from pyspark.sql import SparkSession
+
+# Configurar os nomes dos buckets
+minio_bucket_prata = "prata"
+minio_bucket_ouro = "ouro"
+
+# Configurar a sessão Spark
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+57/2:
+# Exemplo: Ler o DataFrame de matrículas completas da camada Prata
+path_matriculas_completa_prata = f"s3a://{minio_bucket_prata}/matriculas_completa"
+df_matriculas_completa_prata = spark.read.parquet(path_matriculas_completa_prata)
+print("Schema de matriculas_completa (Prata):")
+df_matriculas_completa_prata.printSchema()
+df_matriculas_completa_prata.show(5)
+
+# Exemplo: Ler o DataFrame de notas da camada Prata
+path_matricula_notas_prata = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata = spark.read.parquet(path_matricula_notas_prata)
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+
+# Leia outros DataFrames da camada Prata conforme necessário
+57/3:
+# Join dos DataFrames de matrículas completas e notas
+df_completo_notas = df_matriculas_completa_prata.join(
+    df_matricula_notas_prata,
+    ["matricula_id", "disciplina_id"],
+    "inner"
+)
+
+# Agrupar por disciplina e calcular a média da nota
+df_media_notas_ouro = df_completo_notas.groupBy("disciplina_id") \
+    .agg({"nota": "avg"}) \
+    .withColumnRenamed("avg(nota)", "media_nota")
+
+print("\nSchema de media_notas (Ouro):")
+df_media_notas_ouro.printSchema()
+df_media_notas_ouro.show(5)
+57/4:
+df_count_matriculas_ouro = df_matriculas_completa_prata.groupBy("disciplina_id") \
+    .agg({"matricula_id": "count"}) \
+    .withColumnRenamed("count(matricula_id)", "total_matriculas")
+
+print("\nSchema de total_matriculas (Ouro):")
+df_count_matriculas_ouro.printSchema()
+df_count_matriculas_ouro.show(5)
+57/5:
+# Persistir o DataFrame de média de notas
+path_media_notas_ouro_parquet = f"s3a://{minio_bucket_ouro}/media_notas"
+df_media_notas_ouro.write.mode("overwrite").parquet(path_media_notas_ouro_parquet)
+print(f"\nDados de média de notas (Ouro) escritos em: {path_media_notas_ouro_parquet}")
+
+# Persistir o DataFrame de contagem de matrículas
+path_total_matriculas_ouro_parquet = f"s3a://{minio_bucket_ouro}/total_matriculas"
+df_count_matriculas_ouro.write.mode("overwrite").parquet(path_total_matriculas_ouro_parquet)
+print(f"Dados de total de matrículas (Ouro) escritos em: {path_total_matriculas_ouro_parquet}")
+
+# Persista outros DataFrames da camada Ouro conforme necessário
+57/6: spark.stop()
+59/1:
+# Calcular a média de notas por aluno
+df_media_notas_aluno_ouro = df_matricula_notas_prata.groupBy("matricula_id") \
+    .agg({"nota": "avg"}) \
+    .withColumnRenamed("avg(nota)", "media_nota_geral")
+
+print("\nSchema de media_notas_aluno (Ouro):")
+df_media_notas_aluno_ouro.printSchema()
+df_media_notas_aluno_ouro.show(5)
+
+# Persistir o DataFrame
+path_media_notas_aluno_ouro_parquet = f"s3a://{minio_bucket_ouro}/media_notas_aluno"
+df_media_notas_aluno_ouro.write.mode("overwrite").parquet(path_media_notas_aluno_ouro_parquet)
+print(f"Dados de média de notas por aluno (Ouro) escritos em: {path_media_notas_aluno_ouro_parquet}")
+59/2:
+# Ler o DataFrame de notas da camada Prata
+path_matricula_notas_prata = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata = spark.read.parquet(path_matricula_notas_prata)
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+59/3:
+from pyspark.sql import SparkSession
+
+# Configurar os nomes dos buckets
+minio_bucket_prata = "prata"
+minio_bucket_ouro = "ouro"
+
+# Configurar a sessão Spark
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.4:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+# Ler o DataFrame de notas da camada Prata
+path_matricula_notas_prata = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata = spark.read.parquet(path_matricula_notas_prata)
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+
+# Calcular a média de notas por aluno
+df_media_notas_aluno_ouro = df_matricula_notas_prata.groupBy("matricula_id") \
+    .agg({"nota": "avg"}) \
+    .withColumnRenamed("avg(nota)", "media_nota_geral")
+
+print("\nSchema de media_notas_aluno (Ouro):")
+df_media_notas_aluno_ouro.printSchema()
+df_media_notas_aluno_ouro.show(5)
+
+# Persistir o DataFrame
+path_media_notas_aluno_ouro_parquet = f"s3a://{minio_bucket_ouro}/media_notas_aluno"
+df_media_notas_aluno_ouro.write.mode("overwrite").parquet(path_media_notas_aluno_ouro_parquet)
+print(f"Dados de média de notas por aluno (Ouro) escritos em: {path_media_notas_aluno_ouro_parquet}")
+
+# ... (o restante do seu código para outras transformações da camada Ouro)
+67/1:
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config(...)
+    .config("fs.s3a.endpoint", "http://172.18.0.2:9000")
+    .config(...)
+    .getOrCreate()
+
+# Ler o DataFrame de notas da camada Prata
+path_matricula_notas_prata = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata = spark.read.parquet(path_matricula_notas_prata)
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+67/2:
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.2:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+68/1:
+from pyspark.sql import SparkSession
+
+# Agora você pode usar SparkSession.builder
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.2:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+# Depois de criar a sessão Spark, você pode ler os dados da camada Prata
+path_matricula_notas_prata = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata = spark.read.parquet(path_matricula_notas_prata)
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+69/1:
+from pyspark.sql import SparkSession
+
+# Configurar os nomes dos buckets
+minio_bucket_prata = "prata"
+minio_bucket_ouro = "ouro"
+
+# Agora você pode usar SparkSession.builder
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.2:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+# Depois de criar a sessão Spark, você pode ler os dados da camada Prata
+path_matricula_notas_prata = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata = spark.read.parquet(path_matricula_notas_prata)
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+71/1:
+from pyspark.sql import SparkSession
+
+# Configurar os nomes dos buckets
+minio_bucket_prata = "prata"
+minio_bucket_ouro = "ouro"
+
+# Agora você pode usar SparkSession.builder
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.2:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+# Depois de criar a sessão Spark, você pode ler os dados da camada Prata
+path_matricula_notas_prata = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata = spark.read.parquet(path_matricula_notas_prata)
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+72/1:
+from pyspark.sql import SparkSession
+
+# Configurar os nomes dos buckets
+minio_bucket_prata = "prata"
+minio_bucket_ouro = "ouro"
+
+# Configurar a sessão Spark
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.2:9000")
+    .config("fs.s3a.access.key", "minioaccesskey")
+    .config("fs.s3a.secret.key", "miniosecretkey")
+    .config("fs.s3a.path.style.access", "true")
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+    .config("fs.s3a.connection.ssl.enabled", "false")
+    .getOrCreate()
+
+print("Sessão Spark iniciada com sucesso!") # Adicione esta linha para confirmar
+72/2:
+from pyspark.sql import SparkSession
+
+# Configurar os nomes dos buckets
+minio_bucket_prata = "prata"
+minio_bucket_ouro = "ouro"
+
+# Configurar a sessão Spark
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.2:9000")
+    .config("fs.s3a.access.key", "minioaccesskey")
+    .config("fs.s3a.secret.key", "miniosecretkey")
+    .config("fs.s3a.path.style.access", "true")
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+    .config("fs.s3a.connection.ssl.enabled", "false")
+    .getOrCreate()
+
+print("Sessão Spark iniciada com sucesso!") # Adicione esta linha para confirmar
+73/1:
+from pyspark.sql import SparkSession
+
+# Configurar os nomes dos buckets
+minio_bucket_prata = "prata"
+minio_bucket_ouro = "ouro"
+
+# Configurar a sessão Spark
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.2:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+print("Sessão Spark iniciada com sucesso!") # Adicione esta linha para confirmar
+73/2:
+# Depois de criar a sessão Spark, você pode ler os dados da camada Prata
+path_matricula_notas_prata = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata = spark.read.parquet(path_matricula_notas_prata)
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+74/1:
+from pyspark.sql import SparkSession
+
+# Configurar os nomes dos buckets
+minio_bucket_prata = "prata"
+minio_bucket_ouro = "ouro"
+
+# Configurar a sessão Spark
+spark = SparkSession.builder \
+    .appName("TransformacaoOuro") \
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026") \
+    .config("fs.s3a.endpoint", "http://172.18.0.3:9000") \
+    .config("fs.s3a.access.key", "minioaccesskey") \
+    .config("fs.s3a.secret.key", "miniosecretkey") \
+    .config("fs.s3a.path.style.access", "true") \
+    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("fs.s3a.connection.ssl.enabled", "false") \
+    .getOrCreate()
+
+print("Sessão Spark iniciada com sucesso!") # Adicione esta linha para confirmar
+74/2:
+# Depois de criar a sessão Spark, você pode ler os dados da camada Prata
+path_matricula_notas_prata = f"s3a://{minio_bucket_prata}/matricula_notas"
+df_matricula_notas_prata = spark.read.parquet(path_matricula_notas_prata)
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+df_matricula_notas_prata.show(5)
+74/3:
+# Calcular a média de notas por aluno
+df_media_notas_aluno_ouro = df_matricula_notas_prata.groupBy("matricula_id") \
+    .agg({"nota": "avg"}) \
+    .withColumnRenamed("avg(nota)", "media_nota_geral")
+
+print("\nSchema de media_notas_aluno (Ouro):")
+df_media_notas_aluno_ouro.printSchema()
+df_media_notas_aluno_ouro.show(5)
+
+# Persistir o DataFrame
+path_media_notas_aluno_ouro_parquet = f"s3a://{minio_bucket_ouro}/media_notas_aluno"
+df_media_notas_aluno_ouro.write.mode("overwrite").parquet(path_media_notas_aluno_ouro_parquet)
+print(f"Dados de média de notas por aluno (Ouro) escritos em: {path_media_notas_aluno_ouro_parquet}")
+
+# Calcular a média, máxima e mínima nota por disciplina
+df_desempenho_disciplina_ouro = df_matricula_notas_prata.groupBy("disciplina_id") \
+    .agg({"nota": "avg", "nota": "max", "nota": "min"}) \
+    .withColumnRenamed("avg(nota)", "media_nota_disciplina") \
+    .withColumnRenamed("max(nota)", "max_nota_disciplina") \
+    .withColumnRenamed("min(nota)", "min_nota_disciplina")
+
+print("\nSchema de desempenho_disciplina (Ouro):")
+df_desempenho_disciplina_ouro.printSchema()
+df_desempenho_disciplina_ouro.show(5)
+
+# Persistir o DataFrame
+path_desempenho_disciplina_ouro_parquet = f"s3a://{minio_bucket_ouro}/desempenho_disciplina"
+df_desempenho_disciplina_ouro.write.mode("overwrite").parquet(path_desempenho_disciplina_ouro_parquet)
+print(f"Dados de desempenho por disciplina (Ouro) escritos em: {path_desempenho_disciplina_ouro_parquet}")
+74/4:
+# Carregar os dados de média de notas por aluno da camada Ouro
+path_media_notas_aluno_ouro_parquet = f"s3a://{minio_bucket_ouro}/media_notas_aluno"
+df_media_notas_aluno_ouro_carregado = spark.read.parquet(path_media_notas_aluno_ouro_parquet)
+
+print("\nDados de média de notas por aluno (Ouro) carregados:")
+df_media_notas_aluno_ouro_carregado.show(5)
+
+# Carregar os dados de desempenho por disciplina da camada Ouro
+path_desempenho_disciplina_ouro_parquet = f"s3a://{minio_bucket_ouro}/desempenho_disciplina"
+df_desempenho_disciplina_ouro_carregado = spark.read.parquet(path_desempenho_disciplina_ouro_parquet)
+
+print("\nDados de desempenho por disciplina (Ouro) carregados:")
+df_desempenho_disciplina_ouro_carregado.show(5)
+74/5: import matplotlib.pyplot as plt
+74/6: pandas_media_notas_aluno = df_media_notas_aluno_ouro_carregado.toPandas()
+74/7:
+plt.figure(figsize=(10, 6))
+plt.hist(pandas_media_notas_aluno['media_nota_geral'], bins=10, edgecolor='black')
+plt.title('Distribuição das Médias de Notas dos Alunos')
+plt.xlabel('Média de Notas')
+plt.ylabel('Número de Alunos')
+plt.grid(True)
+plt.show()
+74/8:
+# Exibir o schema do DataFrame da camada Prata
+print("\nSchema de matricula_notas (Prata):")
+df_matricula_notas_prata.printSchema()
+
+# Mostrar algumas linhas dos dados da camada Prata
+print("\nPrimeiras 20 linhas de matricula_notas (Prata):")
+df_matricula_notas_prata.show(20)
+
+# Calcular estatísticas descritivas da coluna 'nota' na camada Prata
+print("\Estatísticas descritivas da coluna 'nota' (Prata):")
+df_matricula_notas_prata.describe("nota").show()
+74/9:
+# Definir o intervalo de notas válidas
+nota_minima = 0.0
+nota_maxima = 100.0
+
+# Filtrar o DataFrame da camada Prata para manter apenas as notas válidas
+df_matricula_notas_prata_filtrado = df_matricula_notas_prata.filter((df_matricula_notas_prata['nota'] >= nota_minima) & (df_matricula_notas_prata['nota'] <= nota_maxima))
+
+# Exibir o número de linhas antes e depois da filtragem para ver o impacto
+print(f"Número de linhas no DataFrame da camada Prata original: {df_matricula_notas_prata.count()}")
+print(f"Número de linhas no DataFrame da camada Prata filtrado: {df_matricula_notas_prata_filtrado.count()}")
+
+# Mostrar algumas linhas do DataFrame filtrado
+print("\nPrimeiras 20 linhas de matricula_notas (Prata) filtrado:")
+df_matricula_notas_prata_filtrado.show(20)
+
+# Recalcular as estatísticas descritivas da coluna 'nota' no DataFrame filtrado
+print("\nEstatísticas descritivas da coluna 'nota' (Prata) filtrado:")
+df_matricula_notas_prata_filtrado.describe("nota").show()
+74/10:
+# Definir o intervalo de notas válidas (Opção A: 0 a 10)
+nota_minima_op_a = 0.0
+nota_maxima_op_a = 10.0
+
+# Filtrar o DataFrame da camada Prata para manter apenas as notas válidas (Opção A)
+df_matricula_notas_prata_filtrado_op_a = df_matricula_notas_prata.filter((df_matricula_notas_prata['nota'] >= nota_minima_op_a) & (df_matricula_notas_prata['nota'] <= nota_maxima_op_a))
+
+# Exibir o número de linhas antes e depois da filtragem (Opção A)
+print(f"Número de linhas no DataFrame da camada Prata original: {df_matricula_notas_prata.count()}")
+print(f"Número de linhas no DataFrame da camada Prata filtrado (0 a 10): {df_matricula_notas_prata_filtrado_op_a.count()}")
+
+# Mostrar algumas linhas do DataFrame filtrado (Opção A)
+print("\nPrimeiras 20 linhas de matricula_notas (Prata) filtrado (0 a 10):")
+df_matricula_notas_prata_filtrado_op_a.show(20)
+
+# Recalcular as estatísticas descritivas da coluna 'nota' no DataFrame filtrado (Opção A)
+print("\nEstatísticas descritivas da coluna 'nota' (Prata) filtrado (0 a 10):")
+df_matricula_notas_prata_filtrado_op_a.describe("nota").show()
+74/11:
+# Calcular a média de notas por aluno USANDO O DATAFRAME FILTRADO
+df_media_notas_aluno_ouro_filtrado = df_matricula_notas_prata_filtrado_op_a.groupBy("matricula_id") \
+    .agg({"nota": "avg"}) \
+    .withColumnRenamed("avg(nota)", "media_nota_geral")
+
+print("\nSchema de media_notas_aluno (Ouro) RECALCULADO:")
+df_media_notas_aluno_ouro_filtrado.printSchema()
+df_media_notas_aluno_ouro_filtrado.show(5)
+
+# Persistir o DataFrame RECALCULADO (você pode sobrescrever o anterior ou salvar com um novo nome)
+path_media_notas_aluno_ouro_parquet_filtrado = f"s3a://{minio_bucket_ouro}/media_notas_aluno_filtrado"
+df_media_notas_aluno_ouro_filtrado.write.mode("overwrite").parquet(path_media_notas_aluno_ouro_parquet_filtrado)
+print(f"Dados de média de notas por aluno (Ouro) RECALCULADOS e escritos em: {path_media_notas_aluno_ouro_parquet_filtrado}")
+74/12:
+# Calcular a média, máxima e mínima nota por disciplina USANDO O DATAFRAME FILTRADO
+df_desempenho_disciplina_ouro_filtrado = df_matricula_notas_prata_filtrado_op_a.groupBy("disciplina_id") \
+    .agg({"nota": "avg", "nota": "max", "nota": "min"}) \
+    .withColumnRenamed("avg(nota)", "media_nota_disciplina") \
+    .withColumnRenamed("max(nota)", "max_nota_disciplina") \
+    .withColumnRenamed("min(nota)", "min_nota_disciplina")
+
+print("\nSchema de desempenho_disciplina (Ouro) RECALCULADO:")
+df_desempenho_disciplina_ouro_filtrado.printSchema()
+df_desempenho_disciplina_ouro_filtrado.show(5)
+
+# Persistir o DataFrame RECALCULADO (você pode sobrescrever o anterior ou salvar com um novo nome)
+path_desempenho_disciplina_ouro_parquet_filtrado = f"s3a://{minio_bucket_ouro}/desempenho_disciplina_filtrado"
+df_desempenho_disciplina_ouro_filtrado.write.mode("overwrite").parquet(path_desempenho_disciplina_ouro_parquet_filtrado)
+print(f"Dados de desempenho por disciplina (Ouro) RECALCULADOS e escritos em: {path_desempenho_disciplina_ouro_parquet_filtrado}")
+74/13:
+import matplotlib.pyplot as plt
+
+# Carregar o DataFrame RECALCULADO de média de notas por aluno da camada Ouro
+path_media_notas_aluno_ouro_parquet_filtrado = f"s3a://{minio_bucket_ouro}/media_notas_aluno_filtrado"
+df_media_notas_aluno_ouro_carregado_filtrado = spark.read.parquet(path_media_notas_aluno_ouro_parquet_filtrado)
+
+# Converter o DataFrame RECALCULADO do Spark para Pandas
+pandas_media_notas_aluno_filtrado = df_media_notas_aluno_ouro_carregado_filtrado.toPandas()
+
+# Criar o histograma com os dados corrigidos
+plt.figure(figsize=(10, 6))
+plt.hist(pandas_media_notas_aluno_filtrado['media_nota_geral'], bins=10, edgecolor='black')
+plt.title('Distribuição das Médias de Notas dos Alunos (Dados Corrigidos)')
+plt.xlabel('Média de Notas')
+plt.ylabel('Número de Alunos')
+plt.grid(True)
+plt.show()
+74/14:
+import matplotlib.pyplot as plt
+
+# Converter o DataFrame de desempenho por disciplina (filtrado) do Spark para Pandas
+pandas_desempenho_disciplina_filtrado = df_desempenho_disciplina_ouro_filtrado.toPandas()
+
+# Criar o gráfico de barras da média de notas por disciplina
+plt.figure(figsize=(12, 6))
+plt.bar(pandas_desempenho_disciplina_filtrado['disciplina_id'].astype(str), pandas_desempenho_disciplina_filtrado['media_nota_disciplina'], color='skyblue')
+plt.xlabel('ID da Disciplina')
+plt.ylabel('Média de Notas')
+plt.title('Média de Notas por Disciplina (Dados Corrigidos)')
+plt.xticks(rotation=45, ha='right')
+plt.grid(axis='y')
+plt.tight_layout()
+plt.show()
+74/15:
+import matplotlib.pyplot as plt
+
+# Converter o DataFrame de desempenho por disciplina (filtrado) do Spark para Pandas
+pandas_desempenho_disciplina_filtrado = df_desempenho_disciplina_ouro_filtrado.toPandas()
+
+# Criar o gráfico de barras da média de notas por disciplina
+plt.figure(figsize=(12, 6))
+plt.bar(pandas_desempenho_disciplina_filtrado['disciplina_id'].astype(str), pandas_desempenho_disciplina_filtrado['media_nota_disciplina'], color='skyblue')
+plt.xlabel('ID da Disciplina')
+plt.ylabel('Média de Notas')
+plt.title('Média de Notas por Disciplina (Dados Corrigidos)')
+plt.xticks(rotation=45, ha='right')
+plt.grid(axis='y')
+plt.tight_layout()
+plt.show()
+74/16: df_desempenho_disciplina_ouro_filtrado.printSchema()
+74/17:
+# Calcular a média, máxima e mínima nota por disciplina USANDO O DATAFRAME FILTRADO
+df_desempenho_disciplina_ouro_filtrado = df_matricula_notas_prata_filtrado_op_a.groupBy("disciplina_id") \
+    .agg({"nota": "avg", "nota": "max", "nota": "min"}) \
+    .withColumnRenamed("avg(nota)", "media_nota_disciplina") \
+    .withColumnRenamed("max(nota)", "max_nota_disciplina") \
+    .withColumnRenamed("min(nota)", "min_nota_disciplina")
+
+print("\nSchema de desempenho_disciplina (Ouro) RECALCULADO:")
+df_desempenho_disciplina_ouro_filtrado.printSchema()
+df_desempenho_disciplina_ouro_filtrado.show(5)
+
+# Persistir o DataFrame RECALCULADO (você pode sobrescrever o anterior ou salvar com um novo nome)
+path_desempenho_disciplina_ouro_parquet_filtrado = f"s3a://{minio_bucket_ouro}/desempenho_disciplina_filtrado"
+df_desempenho_disciplina_ouro_filtrado.write.mode("overwrite").parquet(path_desempenho_disciplina_ouro_parquet_filtrado)
+print(f"Dados de desempenho por disciplina (Ouro) RECALCULADOS e escritos em: {path_desempenho_disciplina_ouro_parquet_filtrado}")
+74/18:
+from pyspark.sql.functions import avg, max, min
+
+# Calcular a média, máxima e mínima nota por disciplina USANDO O DATAFRAME FILTRADO
+df_desempenho_disciplina_ouro_filtrado = df_matricula_notas_prata_filtrado_op_a.groupBy("disciplina_id") \
+    .agg(avg("nota").alias("media_nota_disciplina"),
+         max("nota").alias("max_nota_disciplina"),
+         min("nota").alias("min_nota_disciplina"))
+
+print("\nSchema de desempenho_disciplina (Ouro) RECALCULADO:")
+df_desempenho_disciplina_ouro_filtrado.printSchema()
+df_desempenho_disciplina_ouro_filtrado.show(5)
+
+# Persistir o DataFrame RECALCULADO (você pode sobrescrever o anterior ou salvar com um novo nome)
+path_desempenho_disciplina_ouro_parquet_filtrado = f"s3a://{minio_bucket_ouro}/desempenho_disciplina_filtrado_corrigido"
+df_desempenho_disciplina_ouro_filtrado.write.mode("overwrite").parquet(path_desempenho_disciplina_ouro_parquet_filtrado_corrigido)
+print(f"Dados de desempenho por disciplina (Ouro) RECALCULADOS e escritos em: {path_desempenho_disciplina_ouro_parquet_filtrado_corrigido}")
+74/19:
+from pyspark.sql.functions import avg, max, min
+
+# Calcular a média, máxima e mínima nota por disciplina USANDO O DATAFRAME FILTRADO
+df_desempenho_disciplina_ouro_filtrado = df_matricula_notas_prata_filtrado_op_a.groupBy("disciplina_id") \
+    .agg(avg("nota").alias("media_nota_disciplina"),
+         max("nota").alias("max_nota_disciplina"),
+         min("nota").alias("min_nota_disciplina"))
+
+print("\nSchema de desempenho_disciplina (Ouro) RECALCULADO:")
+df_desempenho_disciplina_ouro_filtrado.printSchema()
+df_desempenho_disciplina_ouro_filtrado.show(5)
+
+# Definir o caminho de persistência
+path_desempenho_disciplina_ouro_parquet_filtrado_corrigido = f"s3a://{minio_bucket_ouro}/desempenho_disciplina_filtrado_corrigido"
+
+# Persistir o DataFrame RECALCULADO
+df_desempenho_disciplina_ouro_filtrado.write.mode("overwrite").parquet(path_desempenho_disciplina_ouro_parquet_filtrado_corrigido)
+print(f"Dados de desempenho por disciplina (Ouro) RECALCULADOS e escritos em: {path_desempenho_disciplina_ouro_parquet_filtrado_corrigido}")
+74/20:
+import matplotlib.pyplot as plt
+
+# Converter o DataFrame de desempenho por disciplina (filtrado) do Spark para Pandas
+pandas_desempenho_disciplina_filtrado = df_desempenho_disciplina_ouro_filtrado.toPandas()
+
+# Criar o gráfico de barras da média de notas por disciplina
+plt.figure(figsize=(12, 6))
+plt.bar(pandas_desempenho_disciplina_filtrado['disciplina_id'].astype(str), pandas_desempenho_disciplina_filtrado['media_nota_disciplina'], color='skyblue')
+plt.xlabel('ID da Disciplina')
+plt.ylabel('Média de Notas')
+plt.title('Média de Notas por Disciplina (Dados Corrigidos)')
+plt.xticks(rotation=45, ha='right')
+plt.grid(axis='y')
+plt.tight_layout()
+plt.show()
+74/21:
+import matplotlib.pyplot as plt
+
+# Criar o gráfico de barras da nota máxima por disciplina
+plt.figure(figsize=(12, 6))
+plt.bar(pandas_desempenho_disciplina_filtrado['disciplina_id'].astype(str), pandas_desempenho_disciplina_filtrado['max_nota_disciplina'], color='lightcoral')
+plt.xlabel('ID da Disciplina')
+plt.ylabel('Nota Máxima')
+plt.title('Nota Máxima por Disciplina (Dados Corrigidos)')
+plt.xticks(rotation=45, ha='right')
+plt.grid(axis='y')
+plt.tight_layout()
+plt.show()
+74/22:
+import matplotlib.pyplot as plt
+
+# Criar o gráfico de barras da nota mínima por disciplina
+plt.figure(figsize=(12, 6))
+plt.bar(pandas_desempenho_disciplina_filtrado['disciplina_id'].astype(str), pandas_desempenho_disciplina_filtrado['min_nota_disciplina'], color='lightgreen')
+plt.xlabel('ID da Disciplina')
+plt.ylabel('Nota Mínima')
+plt.title('Nota Mínima por Disciplina (Dados Corrigidos)')
+plt.xticks(rotation=45, ha='right')
+plt.grid(axis='y')
+plt.tight_layout()
+plt.show()
+74/23:
+## Diagrama do Pipeline
+
+Aqui está um diagrama representando os serviços envolvidos, o pipeline e os buckets do Minio:
+
+![Diagrama do Pipeline](diagramas/Diagrama de Pipeline.jpg)
+78/1:
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ef8f4e12-71e8-4b0b-8fd4-fbad7b8d4470",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
+   1: %history
+   2: %history -g -f filename
